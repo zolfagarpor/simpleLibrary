@@ -6,18 +6,25 @@
   <title>جستجوگر کتابخانه</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+
   <div class="intro">
     <button class="intro-button"  onclick="animateBackground()">ورود</button>
     <div class="leftside"></div>
     <div class="rightside"></div>
   </div>
+
   <div class="background">
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
+
   <div class="container">
+
+    <div id="top"></div>
+
     <div class="search-section">
       <div class="search-box">
         <h1>کتابخانه</h1>
@@ -40,6 +47,7 @@
         </div>
       </div>
     </div>
+
     <div class="result-section">
       <div id="result"></div>
       <div class="book-details">
@@ -50,7 +58,11 @@
         <div id="selected-book-description" class="selected-book-description"></div>
       </div>
     </div>
+
   </div>
+
+  <a href="#top" id="backToTop">^</a>
+  
   <script src="script.js"></script>
   <script src="saves/script2.js"></script>
 </body>
