@@ -315,18 +315,16 @@ h3{
 @media (max-width: 768px) {
   body{
     overflow: scroll;
+    overflow-x: hidden;
     padding-bottom: auto;
-    
-  }
-
-  .intro{
-    width: 110%;
-    height: 110%;
   }
 
   .container {
+    height: 100%;
     flex-direction: column;
     overflow: visible;
+    position: absolute;
+    top: 0%;
   }
 
   .search-section {
@@ -347,8 +345,6 @@ h3{
  
   .result-section {
     border-left: unset; 
-    width: auto;
-    height: auto;
   }
 
   .intro-button{
