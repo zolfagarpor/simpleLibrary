@@ -325,6 +325,10 @@ h3{
     height: 100vh;
   }
 
+  .leftside , .rightside{
+    height: 100vh;
+  }
+  
   .container {
     height: 100%;
     flex-direction: column;
