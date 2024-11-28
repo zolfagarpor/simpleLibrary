@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   height: 100vh;
@@ -34,8 +38,9 @@ body {
 
 .intro{
   position: absolute;
+  top: 0%;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: 100;
   opacity: 1;
   display: flex;
@@ -47,7 +52,7 @@ body {
 .leftside , .rightside{
   position: relative;
   width: 50%;
-  height: 100%;
+  height: 100vh;
   z-index: 99;
   transition: transform 1s linear, opacity 0.2s linear;
 }
@@ -296,14 +301,14 @@ h3{
   width: 100%;
   height: 60%;
   margin-bottom: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .selected-book-image{
   height: 100%;
   width: 70%;
-  display: flex;
-  align-self: center;
-  justify-self: center;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
 }
 
@@ -312,7 +317,15 @@ h3{
   text-align: justify;
 }
 
+#backToTop {
+  z-index: -1;
+  opacity: 0;
+}
+
+
+
 @media (max-width: 768px) {
+  
   body{
     overflow: hidden;
     overflow-x: hidden;
@@ -324,11 +337,11 @@ h3{
     top: 0%;
     height: 100vh;
   }
-
+  
   .leftside , .rightside{
     height: 100vh;
   }
-  
+
   .container {
     height: 100%;
     flex-direction: column;
@@ -377,6 +390,32 @@ h3{
     justify-self: unset;
     align-self: unset;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  #backToTop {
+    z-index: unset;
+    opacity: 1;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #0D405A;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0.5;
+    transition: opacity 0.3s,background-color 0.2s ;
+  }
+  
+  #backToTop:hover {
+    background-color: #136658;
+    opacity: 1;
+  }
+
+  #backToTop:active {
+    background-color: #0D415A;
   }
 
 }
