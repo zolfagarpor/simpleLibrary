@@ -319,6 +319,12 @@ h3{
     padding-bottom: auto;
   }
 
+  .intro{
+    position: absolute;
+    top: 0%;
+    height: 100vh;
+  }
+
   .container {
     height: 100%;
     flex-direction: column;
