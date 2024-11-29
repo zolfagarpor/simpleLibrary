@@ -351,10 +351,3 @@ function animateBackground() {
         intro.style.zIndex = '0';
     },  1000);
 }
-
-document.getElementById('backToTop').addEventListener('click', function(event) {
-  event.preventDefault();
-  document.querySelector('#top').scrollIntoView({
-    behavior: 'smooth'
-  });
-});
