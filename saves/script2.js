@@ -126,8 +126,12 @@ function getBookDetails(bookTitle) {
         selectedBookTitleDiv.textContent =  bookTitle;
         selectedBookImageDiv.innerHTML = `<img src="saves/images/${bookImage}" id="selected-book-image" class="selected-book-image">`;
         selectedBookdescriptionDiv.textContent =  bookDescription;
+
+        // اطمینان از بارگذاری کامل تصویر قبل از اسکرول
+        const imageElement = document.getElementById('selected-book-image');
+        imageElement.onload = () => {
+            // تصویر بارگذاری شده، حالا اسکرول می‌کنیم
+            scrollTo('selected-book-description')
+        };
     }
-    setTimeout(() => {
-        scrollTo('selected-book-description')
-    }, 700);
 }
