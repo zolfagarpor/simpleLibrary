@@ -365,8 +365,7 @@ h3{
     bottom: 0;
     border-radius: unset;
     box-shadow: unset;
-    display: flex;
-
+    display: unset;
   }
 
   .search-section {
