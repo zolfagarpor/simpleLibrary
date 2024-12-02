@@ -274,9 +274,12 @@ function searchBook() {
             resultDiv.textContent = 'لطفاً از وارد کردن کلمات غیرمفید (مانند حروف ربط و اضافه) خودداری کنید. برای جستجو، نام یک کتاب یا عبارت معنادار وارد کنید';
         } else{
             resultDiv.textContent = 'کتابی یافت نشد. لطفا در وارد کردن اسم کتاب دقت کنید.';
-        }
-        scrollToBook('book 1');   
+        }   
     }, 200);
+    setTimeout(() => {
+        scrollToBook('book 1');
+    }, 250);
+    
 }
 
 function showAllBooks() {
