@@ -332,6 +332,7 @@ h3{
     overflow: hidden;
     overflow-x: hidden;
     padding-bottom: auto;
+    background: unset;
   }
 
   .wave {
