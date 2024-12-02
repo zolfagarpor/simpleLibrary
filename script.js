@@ -268,13 +268,14 @@ function searchBook() {
         const similarBooks = findBooks(searchInput);
         if (similarBooks.length > 0) {
             resultDiv.innerHTML = similarBooks
-                .map(book => `<p class="result-text" onclick="selectBook('${book}')">کتاب ${book}</p>`)
+                .map((book,index) => `<p  id="book ${index}"  class="result-text" onclick="selectBook('${book}')">کتاب ${book}</p>`)
                 .join(''); // هر کتاب را در یک پاراگراف جداگانه نمایش می‌دهد
         } else if(similarBooks === 0) {
             resultDiv.textContent = 'لطفاً از وارد کردن کلمات غیرمفید (مانند حروف ربط و اضافه) خودداری کنید. برای جستجو، نام یک کتاب یا عبارت معنادار وارد کنید';
         } else{
             resultDiv.textContent = 'کتابی یافت نشد. لطفا در وارد کردن اسم کتاب دقت کنید.';
-        }  
+        }
+        scrollToBook();   
     }, 200);
 }
 
@@ -295,10 +296,16 @@ function showAllBooks() {
 
     setTimeout(() => {
         resultDiv.innerHTML = sortedBooks
-                .map(book => `<p class="result-text" onclick="selectBook('${book}')">کتاب ${book}</p>`)
+                .map((book,index) => `<p  id="book ${index}"  class="result-text" onclick="selectBook('${book}')">کتاب ${book}</p>`)
                 .join('');
+        scrollToBook();        
     }, 200);
 
+}
+
+function scrollToBook() {
+    const element = document.getElementById('result');
+    element.scrollIntoView({ behavior: 'smooth' });
 }
 
 // متغیر برای ذخیره کتاب انتخاب شده
