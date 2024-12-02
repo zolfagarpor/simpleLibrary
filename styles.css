@@ -329,7 +329,7 @@ h3{
 @media (max-width: 768px) {
   
   body{
-    overflow: visible;
+    overflow: hidden;
     overflow-x: hidden;
     padding-bottom: auto;
   }
