@@ -363,7 +363,6 @@ h3{
     position: fixed;
     top: 0;
     bottom: 0;
-    top: unset;
     border-radius: unset;
     box-shadow: unset;
     display: flex;
