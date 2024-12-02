@@ -408,9 +408,9 @@ h3{
   }
 
   #backToTop {
-    z-index: unset;
+    z-index: 99;
     opacity: 1;
-    position: fixed;
+    position: absolute;
     bottom: 20px;
     left: 20px;
     background-color: #0D405A;
