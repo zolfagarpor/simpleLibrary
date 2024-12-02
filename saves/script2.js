@@ -1,359 +1,133 @@
-function lsDistance(a, b) {
-    const matrix = [];
+const saves = [
+    { title: "طراحی الگوریتم ها",
+    image: "algorithm-design.jpg",
+    description: "این کتاب به بررسی و تحلیل الگوریتم‌های مختلف پرداخته و نحوه انتخاب و طراحی بهترین الگوریتم‌ها برای حل مسائل مختلف را آموزش می‌دهد. موضوعات شامل جستجو، مرتب‌سازی، تقسیم و حل، و برنامه‌نویسی پویا هستند. این مباحث به بهبود کارایی و کاهش زمان اجرای برنامه‌ها کمک می‌کنند." },
+    
+    { title: "ساختمان داده ها", 
+    image: "data-structures.jpg", 
+    description: "کتابی که به مفاهیم پایه‌ای ساختمان داده‌ها مانند آرایه‌ها، لیست‌های پیوندی، درخت‌ها، گراف‌ها و جداول هش پرداخته و روش‌های مختلف دسترسی و مدیریت داده‌ها را آموزش می‌دهد. شناخت ساختمان داده‌ها به بهینه‌سازی عملکرد الگوریتم‌ها کمک می‌کند. استفاده از این ساختارها در حل مسائل پیچیده ضروری است." },
 
-    // ایجاد ماتریس
-    for (let i = 0; i <= b.length; i++) { // برای ایجاد سطر
-        matrix[i] = [i];
-    }
-    for (let j = 0; j <= a.length; j++) { // برای ایجاد ستون
-        matrix[0][j] = j;
-    }
+    { title: "مدار های الکترونیکی", 
+    image: "electronic-circuits.jpg", 
+    description: "این کتاب اصول طراحی و تحلیل مدارهای الکترونیکی آنالوگ و دیجیتال را پوشش می‌دهد. مباحثی چون دیودها، ترانزیستورها، تقویت‌کننده‌ها و مدارهای منطقی در این کتاب مطرح می‌شود. آشنایی با این مفاهیم برای طراحی مدارهای عملی و مفهومی ضروری است." },
 
-    // محاسبه فاصله
-    for (let i = 1; i <= b.length; i++) {
-        for (let j = 1; j <= a.length; j++) {
-            if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                matrix[i][j] = matrix[i - 1][j - 1]; // کاراکترها برابرند
-            } else {
-                matrix[i][j] = Math.min(
-                    matrix[i - 1][j - 1] + 1, // جایگزینی
-                    matrix[i][j - 1] + 1,     // حذف
-                    matrix[i - 1][j] + 1      // افزودن
-                );
-            }
-        }
-    }
+    { title: "سیگنال ها و سیستم ها", 
+    image: "signals-systems.jpg", 
+    description: "این کتاب به بررسی اصول پایه‌ای سیگنال‌ها و سیستم‌ها در پردازش سیگنال‌ها می‌پردازد. مفاهیمی مانند تبدیل فوریه، فیلترها، و سیستم‌های خطی و غیرخطی در آن توضیح داده می‌شود. این دانش در زمینه‌های مختلف مهندسی برق و ارتباطات کاربرد دارد." },
 
-    return matrix[b.length][a.length]; // فاصله نهایی
-}
+    { title: "هوش مصنوعی", 
+    image: "artificial-intelligence.jpg", 
+    description: "کتابی که به مفاهیم پایه‌ای هوش مصنوعی شامل جستجو، یادگیری ماشین، منطق فازی و سیستم‌های خبره می‌پردازد. هدف آن ایجاد ماشین‌هایی است که قادر به حل مسائل به‌طور هوشمندانه باشند. در این کتاب، الگوریتم‌های هوش مصنوعی در حل مسائل دنیای واقعی معرفی می‌شود." },
 
+    { title: "سیستم های عامل", 
+    image: "operating-systems.jpg", 
+    description: "این کتاب به تشریح عملکرد سیستم‌های عامل از جمله مدیریت منابع، فرآیندها، حافظه و سیستم فایل‌ها می‌پردازد. نحوه تعامل نرم‌افزار با سخت‌افزار و خدماتی که سیستم‌عامل برای برنامه‌ها فراهم می‌کند، در این کتاب توضیح داده می‌شود. دانش سیستم‌های عامل برای طراحی و استفاده از کامپیوترها ضروری است." },
 
-let books = [
-    "طراحی الگوریتم ها",
-    "ساختمان داده ها",
-    "مدار های الکترونیکی",
-    "سیگنال ها و سیستم ها",
-    "هوش مصنوعی",
-    "سیستم های عامل",
-    "طراحی پایگاه داده ها",
-    "اصول طراحی کامپایلر",
-    "شبکه‌ های کامپیوتری",
-    "یادگیری ماشین",
-    "مدارهای منطقی",
-    "مبانی کامپیوتر و برنامه سازی",
-    "اصول شبکه‌های کامپیوتری",
-    "امنیت اطلاعات و رمزنگاری",
-    "مهندسی نرم افزار",
-    "تحلیل و طراحی سیستم ها",
-    "پردازش تصویر دیجیتال",
-    "هوش مصنوعی و یادگیری عمیق",
-    "پردازش زبان طبیعی",
-    "آمار و احتمالات مهندسی",
-    "ریاضیات گسسته و کاربرد های آن",
-    "پردازش سیگنال های دیجیتال",
-    "مهندسی اینترنت",
-    "رایانش ابری",
-    "پایگاه داده های توزیع شده"
+    { title: "طراحی پایگاه داده ها", 
+    image: "database-design.jpg", 
+    description: "این کتاب اصول طراحی و مدیریت پایگاه‌های داده رابطه‌ای را آموزش می‌دهد. موضوعاتی مانند مدل‌های داده‌ای، طراحی پایگاه داده، زبان SQL و بهینه‌سازی پرس‌وجوها در این کتاب بررسی می‌شوند. این مفاهیم برای ساخت سیستم‌های اطلاعاتی و مدیریت داده‌ها بسیار مهم است." },
+
+    { title: "اصول طراحی کامپایلر", 
+    image: "compiler-principles.jpg", 
+    description: "کتابی که فرآیند طراحی کامپایلرها، از جمله تحلیل لغوی، نحوی، بهینه‌سازی و تولید کد را توضیح می‌دهد. این کتاب به دانشجویان کمک می‌کند تا مراحل تبدیل کد منبع به کد اجرایی را درک کنند. کامپایلرها ابزارهای اصلی در زبان‌های برنامه‌نویسی هستند." },
+
+    { title: "شبکه‌ های کامپیوتری", 
+    image: "computer-networks.jpg", 
+    description: "این کتاب به مباحث پایه‌ای شبکه‌های کامپیوتری شامل پروتکل‌ها، معماری شبکه، مسیریابی و امنیت شبکه می‌پردازد. آشنایی با شبکه‌های کامپیوتری برای ارتباطات دیجیتال و اینترنت امری ضروری است. مباحث پیشرفته‌تری مانند شبکه‌های بی‌سیم و IPv6 نیز در آن گنجانده شده است." },
+
+    { title: "یادگیری ماشین", 
+    image: "machine-learning.jpg", 
+    description: "در این کتاب الگوریتم‌ها و روش‌های مختلف یادگیری ماشین برای تحلیل داده‌ها و پیش‌بینی نتایج بررسی می‌شوند. از جمله این روش‌ها می‌توان به یادگیری نظارت‌شده، یادگیری بدون نظارت و یادگیری تقویتی اشاره کرد. این مفاهیم برای ایجاد سیستم‌های هوشمند و تحلیل داده‌های پیچیده کاربرد دارند." },
+
+    { title: "مدارهای منطقی", 
+    image: "logic-circuits.jpg", 
+    description: "کتابی که اصول طراحی مدارهای منطقی را شامل گیت‌های منطقی، فلیپ‌فلاپ‌ها و ماشین‌های حالت می‌آموزد. این مدارها برای پیاده‌سازی عملیات منطقی در دستگاه‌های دیجیتال استفاده می‌شوند. آشنایی با آن‌ها برای طراحی سیستم‌های دیجیتال مانند پردازنده‌ها و سیستم‌های کنترلی ضروری است." },
+
+    { title: "مبانی کامپیوتر و برنامه سازی", 
+    image: "computer-basics.jpg", 
+    description: "این کتاب به معرفی مفاهیم پایه‌ای کامپیوتر و زبان‌های برنامه‌نویسی می‌پردازد. موضوعاتی چون ساختار داده‌ها، الگوریتم‌ها، و اصول طراحی نرم‌افزار در آن مطرح می‌شود. این کتاب مبنای خوبی برای یادگیری برنامه‌نویسی و توسعه نرم‌افزار است." },
+
+    { title: "اصول شبکه‌های کامپیوتری", 
+    image: "network-principles.jpg", 
+    description: "کتابی که به اصول و مفاهیم پایه‌ای شبکه‌های کامپیوتری و نحوه عملکرد آن‌ها در اتصال دستگاه‌ها پرداخته است. مباحثی مانند پروتکل‌های اینترنت، مدیریت شبکه و امنیت شبکه در آن مطرح می‌شود. برای طراحی و پیاده‌سازی شبکه‌های محلی و گسترده ضروری است." },
+
+    { title: "امنیت اطلاعات و رمزنگاری", 
+    image: "information-security.jpg", 
+    description: "این کتاب به مباحث امنیت اطلاعات و روش‌های رمزنگاری داده‌ها می‌پردازد. اصول امنیتی مانند الگوریتم‌های رمزنگاری، امضای دیجیتال و امنیت شبکه‌ها در آن توضیح داده می‌شود. این کتاب برای حفاظت از اطلاعات در دنیای دیجیتال امری حیاتی است." },
+
+    { title: "مهندسی نرم افزار", 
+    image: "software-engineering.jpg", 
+    description: "کتابی که به تحلیل، طراحی و توسعه سیستم‌های نرم‌افزاری می‌پردازد. مدل‌های نرم‌افزاری، فرآیندهای توسعه و تست نرم‌افزار در آن پوشش داده می‌شود. این کتاب به مهندسین نرم‌افزار کمک می‌کند تا سیستم‌های نرم‌افزاری کارآمد و بدون خطا تولید کنند." },
+
+    { title: "تحلیل و طراحی سیستم ها", 
+    image: "systems-analysis.jpg", 
+    description: "این کتاب به فرآیند تحلیل و طراحی سیستم‌ها با رویکرد مهندسی پرداخته و به تشریح نحوه شبیه‌سازی و مدل‌سازی سیستم‌های پیچیده می‌پردازد. موضوعات شامل تحلیل نیازها، طراحی معماری سیستم و پیاده‌سازی مدل‌ها است. این مفاهیم در پروژه‌های بزرگ مهندسی نرم‌افزار کاربرد دارند." },
+
+    { title: "پردازش تصویر دیجیتال", 
+    image: "digital-image-processing.jpg", 
+    description: "این کتاب به تجزیه و تحلیل تصاویر دیجیتال و پردازش آن‌ها با استفاده از الگوریتم‌های ریاضی پرداخته است. موضوعاتی چون فیلتر کردن، تشخیص لبه‌ها و فشرده‌سازی تصویر در آن شرح داده می‌شود. پردازش تصویر در کاربردهای پزشکی، امنیتی و صنعتی مهم است." },
+
+    { title: "هوش مصنوعی و یادگیری عمیق", 
+    image: "ai-deep-learning.jpg", 
+    description: "کتابی که به ترکیب مباحث هوش مصنوعی و یادگیری عمیق پرداخته و الگوریتم‌های پیچیده‌تری چون شبکه‌های عصبی عمیق را توضیح می‌دهد. این روش‌ها در شبیه‌سازی مغز انسان برای حل مسائل پیچیده و تحلیل داده‌های بزرگ استفاده می‌شوند. کاربرد آن‌ها در بینایی کامپیوتری و پردازش زبان طبیعی گسترده است." },
+
+    { title: "پردازش زبان طبیعی", 
+    image: "natural-language-processing.jpg", 
+    description: "این کتاب به تحلیل و پردازش زبان‌های انسانی با استفاده از روش‌های هوش مصنوعی می‌پردازد. مباحثی چون تجزیه و تحلیل نحوی، مدل‌های زبانی و ترجمه ماشینی در آن پوشش داده می‌شود. پردازش زبان طبیعی برای ساخت سیستم‌های مبتنی بر زبان مانند چت‌بات‌ها و مترجم‌های ماشینی حیاتی است." },
+
+    { title: "آمار و احتمالات مهندسی", 
+    image: "statistics-computer-science.jpg", 
+    description: "این کتاب اصول آمار و احتمالات را با تمرکز بر کاربردهای مهندسی شرح می‌دهد. مباحثی چون آزمون‌های فرض، توزیع‌های احتمالاتی و مدل‌سازی تصادفی در آن بررسی می‌شود. این دانش برای تحلیل داده‌های آزمایشگاهی و سیستم‌های پیچیده ضروری است." },
+
+    { title: "ریاضیات گسسته و کاربرد های آن", 
+    image: "discrete-mathematics.jpg", 
+    description: "کتابی که به بررسی مفاهیم ریاضیات گسسته مانند گراف‌ها، مجموعه‌ها و نظریه اعداد می‌پردازد. این مفاهیم برای تحلیل الگوریتم‌ها و طراحی سیستم‌های کامپیوتری کاربرد فراوانی دارند. در حل مسائل بهینه‌سازی و رمزنگاری نیز از آن‌ها استفاده می‌شود." },
+
+    { title: "پردازش سیگنال های دیجیتال", 
+    image: "digital-signal-processing.jpg", 
+    description: "این کتاب به تحلیل و پردازش سیگنال‌های دیجیتال با استفاده از روش‌های ریاضی می‌پردازد. موضوعاتی چون فیلتر کردن، تبدیل فوریه و تحلیل زمان-فرکانس در آن توضیح داده می‌شود. این مفاهیم برای بهبود کیفیت سیگنال‌ها در سیستم‌های مخابراتی و صوتی کاربرد دارند." },
+
+    { title: "مهندسی اینترنت", 
+    image: "internet-engineering.jpg", 
+    description: "کتابی که به اصول و تکنیک‌های مهندسی اینترنت پرداخته و مفاهیم مربوط به توسعه وب، سرویس‌های وب و اینترنت اشیاء را بررسی می‌کند. این کتاب شامل راه‌حل‌های طراحی و پیاده‌سازی سیستم‌های آنلاین و مبتنی بر اینترنت است. برای توسعه اپلیکیشن‌های وب و شبکه‌های اجتماعی حیاتی است." },
+
+    { title: "رایانش ابری", 
+    image: "cloud-computing.jpg", 
+    description: "این کتاب به بررسی مفاهیم و معماری رایانش ابری پرداخته و نحوه استفاده از منابع محاسباتی از راه دور را توضیح می‌دهد. فناوری‌های IaaS، PaaS و SaaS در آن بررسی می‌شوند. رایانش ابری در کاهش هزینه‌ها و مقیاس‌پذیری سیستم‌های کامپیوتری بسیار مفید است." },
+
+    { title: "پایگاه داده های توزیع شده", 
+    image: "distributed-databases.jpg", 
+    description: "این کتاب به طراحی و مدیریت پایگاه‌های داده‌ای می‌پردازد که در سیستم‌های توزیع‌شده برای پردازش داده‌ها استفاده می‌شوند. موضوعاتی چون همگام‌سازی داده‌ها، مسأله نگهداری اطلاعات و مقیاس‌پذیری در آن بررسی می‌شود. این مفاهیم برای سیستم‌های بزرگ و توزیع‌شده ضروری است." }
 ];
 
-// کلمات غیرکلیدی برای جستجوی کتاب
-const irrelevantWords = [
-    "در", "با", "از", "برای", "به", "تا", "که", "و", "یا", "فقط", "چند",
-    "آن", "این", "هم", "هنگام", "پس", "اما", "اگر", "بهتر", "سایر", "شده",
-    "های", "اش", "شد", "خواهد", "شدن", "ما", "کدام", "شما",
-    "هستند", "هستیم", "گفت", "همچنین", "بیشتر", "اینکه",
-    "هیچ", "پیش", "بروی", "جای", "دو", "یک", "آنها", "هر", "همه", "دیگر",
-    "خود", "چه", "می‌توان", "کرد", "حالا", "باشد",
-    "خودش", "جستجو", "کتاب", "اینجا", "نزدیک", "ها"
-];
-
-// کاراکتر های خاص
-const SpecialCharacters = [
-    "!","@","#","%","^","&","*","(",")","-","_",
-    "=","+","<",">",",",".","/","\\","{","}","[","]",
-    "؟","'",'"',":",";","|","`","~","«", "»","،"
-]
-
-// تابع شناسایی کلمات غیر مفید با اشتباه تایپی
-function detectIrrelevantWordsMistake(inputWords) {
-    return inputWords.filter(word => 
-        irrelevantWords.some(irrelevant => lsDistance(word, irrelevant) <= 1)
-    );
-}
-
-// حذف کلمات غیر مفید از ورودی
-function filterIrrelevantWords(input) {
-    const inputWords = input.split(' '); // جدا کردن کلمات ورودی با اسپیس
-    const detectedIrrelevantWordsWithMistake = detectIrrelevantWordsMistake(inputWords); // شناسایی کلمات غیر مفید با اشتباه تایپی
-
-    // حذف کلمات غیر مفید و کلمات با اشتباه تایپی
-    return inputWords
-        .filter(word => !irrelevantWords.includes(word) && !detectedIrrelevantWordsWithMistake.includes(word))
-        .join(' '); // تبدیل دوباره به رشته
-}
-
-function findBooks(input) { 
-    // مرتب‌سازی آرایه کتاب‌ها بر اساس حروف الفبای فارسی
-    books = books.sort((a, b) => a.localeCompare(b, 'fa'));
-
-
-    // حذف کلمات غیر مفید از ورودی
-    input = filterIrrelevantWords(input);
-
-    // اگه حذف کرد و ورودی خالی بود
-    if (input === '') {
-        return 0; 
-    }
-
-    // بررسی وجود کلمات ورودی در بین کلمات اسم کتاب ها(کلمه های کتاب شامل همه کلمه های ورودی باشد)
-    const WordMatches1 = books.filter(book => {
-        const wordsInBook = book.split(' '); // جدا کردن کلمات کتاب بر اساس اسپیس
-        const inputWords = input.split(' '); //  جدا کردن کلمات ورودی بر اساس اسپیس
-        return inputWords.every(inputWord => wordsInBook.some(bookWord => bookWord.includes(inputWord)));
-    });
-
-    if (WordMatches1.length > 0) {
-        return WordMatches1; // کتاب هایی که شامل کلمات ورودی هستند را بر می گرداند
-    }
-
-    // بررسی وجود کلمات ورودی در بین کلمات اسم کتاب ها (با فاصله لون اشتاین)
-    const WordMatches2 = books.filter(book => {
-        const wordsInBook = book.split(' '); // جدا کردن کلمات کتاب بر اساس اسپیس
-        const inputWords = input.split(' '); // جدا کردن کلمات ورودی بر اساس اسپیس
-        return inputWords.every(inputWord =>
-            wordsInBook.some(bookWord => lsDistance(inputWord, bookWord) <= 1) // استفاده از فاصله لون‌اشتاین
-        );
-    });
-
-    if (WordMatches2.length > 0) {
-        return WordMatches2; // کتاب‌هایی که شامل کلمات ورودی با شباهت هستند را بر می‌گرداند
-    }
-
-
-    inputLength = input.split(' ').length   // برای ذخیره طول لیست ورودی(کلمات ورودی بر اساس اسپیس جدا شده اند و داخل لیست ذخیره شده اند)
+// تابع برای دریافت اطلاعات کتاب
+function getBookDetails(bookTitle) {
+    // جستجو برای کتاب انتخاب شده
+    const save = saves.find(b => b.title === bookTitle);
     
-    // اگر یکی از کلمات ورودی در بین کلمات کتاب بود ، آن کتاب را پیشنهاد می دهد
-    // همان wordMatches1 با تغییرات
-    for (let i = 0; i < inputLength; i++) {
-        const WordMatches1WithLoop = books.filter(book => {
-            const wordsInBook = book.split(' '); // جدا کردن کلمات کتاب بر اساس اسپیس
-            const inputWords = Array(input.split(' ')[i]); //  جدا کردن کلمات ورودی بر اساس اسپیس و انتخاب یک کلمه(تا زمانی که حلقه متوقف نشود کلمات بعدی انتخاب می شودند)
-            return inputWords.some(inputWord => wordsInBook.some(bookWord => bookWord.includes(inputWord)));
-        });
-
-        if (WordMatches1WithLoop.length > 0) {
-            return WordMatches1WithLoop; // کتاب هایی که شامل کلمات ورودی هستند را بر می گرداند
-        }
-    }
-
-    // اگر یکی از کلمات ورودی در بین کلمات کتاب بود ، آن کتاب را پیشنهاد می دهد(با فاصله لون اشتاین)
-    // همان wordMatches2 با تغییرات 
-    for (let i = 0; i < inputLength; i++) {
-        const WordMatches2WithLoop = books.filter(book => {
-            const wordsInBook = book.split(' '); // جدا کردن کلمات کتاب بر اساس اسپیس
-            const inputWords = Array(input.split(' ')[i]); // جدا کردن کلمات ورودی بر اساس اسپیس
-            return inputWords.some(inputWord => 
-                wordsInBook.some(bookWord => lsDistance(inputWord, bookWord) <= 1) //  جدا کردن کلمات ورودی بر اساس اسپیس و انتخاب یک کلمه(تا زمانی که حلقه متوقف نشود کلمات بعدی انتخاب می شودند)
-            );
-        });
-    
-        if (WordMatches2WithLoop.length > 0) {
-            return WordMatches2WithLoop; // کتاب‌هایی که شامل کلمات ورودی با شباهت (فاصله لون اشتاین) هستند را بر می‌گرداند
-        }
-    }
-    
-    // در صورتی شرایط ورودی به گونه ای بود که توسط کد های بالا نتیجه ای پیدا نشد
-    // یک لیست خالی ریترن می کنیم 
-    // و طبق دستورات تابع اخر ، اگر نتیجه ای حاصل نشود ، در خروجی کتابی یافت نشد را چاپ میکند
-    return []
-} 
- 
-// حذف اسپیس های اضافی
-function cleanInput(input) {
-    // حذف اسپیس‌های اضافی ابتدا و انتهای ورودی
-    input = input.trim();
-
-    // حذف اسپیس‌ های اضافی بین کلمات
-    input = input.replace(/\s+/g, ' ');
-
-    return input;
-}
-
-function checkAllSingleLetterWords(input) {
-    const words = input.split(' '); // ورودی را بر اساس اسپیس جدا می‌کنیم
-    // بررسی اینکه آیا تمام کلمات یک حرفی هستند
-    const allSingleLetterWords = words.every(word => word.length === 1);
-
-    // اگر همه کلمات یک حرفی باشند، ورودی را بازمی‌گرداند
-    if (allSingleLetterWords) {
-        return input;
-    }
-
-    // در غیر این صورت آرایه خالی باز می‌گرداند
-    return null;
-}
-
-function searchBook() {
     const selectedBookTitleDiv = document.getElementById('selected-book-title');
     const selectedBookImageDiv = document.getElementById('img-place-holder');
     const selectedBookdescriptionDiv = document.getElementById('selected-book-description');
-    
-    selectedBookTitleDiv.textContent =  '';
-    selectedBookImageDiv.textContent = ' ';
-    selectedBookdescriptionDiv.textContent =  '';
 
-    let searchInput = document.getElementById('searchInput').value.trim();
-    
-    // حذف اسپیس های اضافی
-    searchInput = cleanInput(searchInput);
-    
-    // ذخیره کلمات ورودی 
-    const inputWords = searchInput.split(' ');
-    
-    // چک کردن اینکه آیا ورودی فقط یک کلمه غیرمفید است
-    const containsIrrelevantWords = inputWords.every(word => irrelevantWords.includes(word));
-
-    const resultDiv = document.getElementById('result');
-    
-    resultDiv.textContent = ''; // پاک کردن نتیجه قبلی
-
-    setTimeout(() => {
-
-        // بررسی اینکه آیا تمام کلمات ورودی یک حرفی هستند
-        const result = checkAllSingleLetterWords(searchInput);
-        if (result) {
-            resultDiv.textContent = 'لطفا نام یا کلمه ای از کتاب را به صورت کامل وارد کنید.';
-            return;
-        }
-
-        // اگر ورودی فقط یک کلمه غیر مفید باشد
-        if (containsIrrelevantWords) {
-            resultDiv.textContent = 'لطفاً از وارد کردن کلمات غیرمفید (مانند حروف ربط و اضافه) خودداری کنید. برای جستجو، نام یک کتاب یا عبارت معنادار وارد کنید';
-            return;
-        }
+    if (save) {
+        // ذخیره اطلاعات کتاب در متغیرها
+        const bookTitle = save.title;
+        const bookImage = save.image;
+        const bookDescription = save.description;
         
-        // بررسی نداشتن کاراکتر خاص
-        const hasSpecialCharacters = SpecialCharacters.some(char => searchInput.includes(char))
-        if(hasSpecialCharacters) {
-            resultDiv.textContent = 'نام کتاب نمیتواند شامل کلمات خاص باشد';
-            return;
-        }
+        
+        // نمایش اطلاعات کتاب در کنسول (یا استفاده در هر بخش دیگر)
+        console.log('عنوان کتاب:', bookTitle);
+        console.log('تصویر کتاب:', bookImage);
+        console.log('توضیحات کتاب:', bookDescription);
+        
+        // اگر بخواهید این اطلاعات را در جایی در HTML نمایش دهید، می‌توانید اینجا از آنها استفاده کنید
 
-        // بررسی اینکه ورودی شامل حروف انگلیسی است یا نه
-        const isEnglishInput = /[A-Za-z]/.test(searchInput);
-        if (isEnglishInput) {
-            resultDiv.textContent = 'لطفا به فارسی جستجو کنید.';
-            return;
-        }
-
-        // بررسی اینکه ورودی شامل عدد است یا نه
-        const hasNumber = /[0-9]/.test(searchInput);
-        if (hasNumber) {
-            resultDiv.textContent = 'لطفا به فارسی جستجو کنید.';
-            return;
-        }
-
-        // بررسی 2 حرفی یا کمتر از 2 حرفی نبودن ورودی
-        if (searchInput.length <= 2 && searchInput.length >= 1){
-            resultDiv.textContent = 'لطفا نام یا کلمه ای از کتاب را به صورت کامل وارد کنید.';
-            return;
-        }
-
-        // اگه بدون ورودی باشه
-        if (searchInput === '') {
-            resultDiv.textContent = 'لطفا نام یک کتاب را وارد کنید.';
-            return; 
-        }
-
-        const similarBooks = findBooks(searchInput);
-        if (similarBooks.length > 0) {
-            resultDiv.innerHTML = similarBooks
-                .map((book,index) => `<p  id="book ${index}"  class="result-text" onclick="selectBook('${book}')">کتاب ${book}</p>`)
-                .join(''); // هر کتاب را در یک پاراگراف جداگانه نمایش می‌دهد
-        } else if(similarBooks === 0) {
-            resultDiv.textContent = 'لطفاً از وارد کردن کلمات غیرمفید (مانند حروف ربط و اضافه) خودداری کنید. برای جستجو، نام یک کتاب یا عبارت معنادار وارد کنید';
-        } else{
-            resultDiv.textContent = 'کتابی یافت نشد. لطفا در وارد کردن اسم کتاب دقت کنید.';
-        }   
-        scrollTo('result');
-    }, 200);
-}
-
-function showAllBooks() {
-    const selectedBookTitleDiv = document.getElementById('selected-book-title');
-    const selectedBookImageDiv = document.getElementById('img-place-holder');
-    const selectedBookdescriptionDiv = document.getElementById('selected-book-description');
-    
-    selectedBookTitleDiv.textContent =  '';
-    selectedBookImageDiv.textContent = ' ';
-    selectedBookdescriptionDiv.textContent =  '';
-
-    const resultDiv = document.getElementById('result');
-    resultDiv.textContent = ''; // پاک کردن نتیجه قبلی
-
-    // مرتب‌سازی آرایه کتاب‌ها بر اساس حروف الفبای فارسی
-    const sortedBooks = books.sort((a, b) => a.localeCompare(b, 'fa'));
-    
-    setTimeout(() => {
-        resultDiv.innerHTML = sortedBooks
-                .map((book,index) => `<p  id="book ${index}"  class="result-text" onclick="selectBook('${book}')">کتاب ${book}</p>`)
-                .join('');
-        scrollTo('result');        
-    }, 200);
-
-}
-function scrollTo(id) {
-    const element = document.getElementById(id);
-    element.scrollIntoView({ behavior: 'smooth' });
-}
-
-// متغیر برای ذخیره کتاب انتخاب شده
-let selectedBook = null;
-
-// تابع برای انتخاب کتاب
-function selectBook(bookName) {
-    selectedBook = bookName;
-
-    const resultDiv = document.getElementById('result');
-    resultDiv.textContent = '';
-
-    console.log('کتاب انتخاب شده:', selectedBook);
-    getBookDetails(selectedBook);
-}
-
-document.addEventListener("keydown", function(event) {
-    // برای بررسی اینکه آیا فیلد ورودی فوکوس دارد
-    const inputField = document.getElementById('searchInput');
-
-    if (event.key === "Enter" && document.activeElement === inputField) {
-        searchBook();
+        selectedBookTitleDiv.textContent =  bookTitle;
+        selectedBookImageDiv.innerHTML = `<img src="saves/images/${bookImage}" id="selected-book-image" class="selected-book-image">`;
+        selectedBookdescriptionDiv.textContent =  bookDescription;
     }
-});
-
-
-function animateBackground() {
-    // حرکت دادن بخش‌های چپ و راست
-    document.querySelector('.leftside').style.transform = 'translateX(-100%)';
-    document.querySelector('.rightside').style.transform = 'translateX(100%)';
-    // تنظیم شفافیت بخش چپ و راست به 0.8 بعد از حرکت دادن
-    document.querySelector('.leftside').style.opacity = '0.8';
-    document.querySelector('.rightside').style.opacity = '0.8';
-
-    // دسترسی به سی اس اس عنصری که با کلاس اینترو تعریف شده
-    const intro = document.querySelector('.intro');
-    // دسترسی به سی اس اس دکمه ای که با کلاس اینترو باتن تعریف شده
-    const button = document.querySelector('.intro-button');
-    // غیرفعال کردن عملکرد دکمه
-    button.disabled = true;
-
-    // اضافه کردن افکت محو شدن و حذف دکمه بعد از 0.1 ثانیه
     setTimeout(() => {
-        button.style.transition = 'opacity 0.5s ease'; // برای افکت محو شدن
-        button.style.opacity = '0'; // محو شدن
-    }, 100); // محو شدن بعد از 0.1 ثانیه
-
-    // پس از گذشت یک ثانیه مقدار زد ایندکس عنصر اینترو به 0 تنظیم می شود
-    setTimeout(() => {
-        intro.style.zIndex = '0';
-    },  1000);
+        scrollTo()
+    }, 250);
 }
