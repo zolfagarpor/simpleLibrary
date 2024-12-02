@@ -56,10 +56,13 @@ body {
 
 .leftside {
   background: linear-gradient(360deg ,#0c3b5a, #1369584b), url(left.png);
+  margin-left: 1px;
 }
 
 .rightside {
   background: linear-gradient(360deg ,#0c3b5a, #1369584b), url(right.png);
+  margin-right: 1px;
+
 }
 
 .leftside , .rightside{
