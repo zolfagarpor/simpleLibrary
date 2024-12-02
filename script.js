@@ -267,8 +267,8 @@ function searchBook() {
 
         const similarBooks = findBooks(searchInput);
         if (similarBooks.length > 0) {
-            resultDiv.innerHTML = similarBooks
-                .map((book,index) => `<p  id="book ${index}"  class="result-text" onclick="selectBook('${book}')">کتاب ${book}</p>`)
+            resultDiv.innerHTML = `<p style="text-align: center; margin-bottom: 10px;">تعداد کتاب های یافت شده: ${similarBooks.length}</p>` + similarBooks
+                .map((book,index) => `<p  id="book ${index+1}"  class="result-text" onclick="selectBook('${book}')">${index+1}-کتاب ${book}</p>`)
                 .join(''); // هر کتاب را در یک پاراگراف جداگانه نمایش می‌دهد
         } else if(similarBooks === 0) {
             resultDiv.textContent = 'لطفاً از وارد کردن کلمات غیرمفید (مانند حروف ربط و اضافه) خودداری کنید. برای جستجو، نام یک کتاب یا عبارت معنادار وارد کنید';
@@ -294,21 +294,25 @@ function showAllBooks() {
     // مرتب‌سازی آرایه کتاب‌ها بر اساس حروف الفبای فارسی
     const sortedBooks = books.sort((a, b) => a.localeCompare(b, 'fa'));
     
-    const bookCountDiv = document.getElementById('book-Count');
-    bookCountDiv.textContent = '';
-
     setTimeout(() => {
-        bookCountDiv.textContent = `تعداد کتاب های یافت شده: ` + `${books.length}`
-        resultDiv.innerHTML = sortedBooks
+        resultDiv.innerHTML = `<p style="text-align: center; margin-bottom: 10px;">تعداد کتاب های یافت شده: ${sortedBooks.length}</p>` + sortedBooks
                 .map((book,index) => `<p  id="book ${index+1}"  class="result-text" onclick="selectBook('${book}')">${index+1}-کتاب ${book}</p>`)
                 .join('');
         scrollTo('result');        
     }, 200);
 
 }
+
 function scrollTo(id) {
-    const element = document.getElementById(id);
-    element.scrollIntoView({ behavior: 'smooth' });
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+    // بررسی اینکه آیا صفحه کوچکتر یا مساوی 768px است
+    if (mediaQuery.matches) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 }
 
 // متغیر برای ذخیره کتاب انتخاب شده
