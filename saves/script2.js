@@ -127,5 +127,7 @@ function getBookDetails(bookTitle) {
         selectedBookImageDiv.innerHTML = `<img src="saves/images/${bookImage}" id="selected-book-image" class="selected-book-image">`;
         selectedBookdescriptionDiv.textContent =  bookDescription;
     }
-
+    setTimeout(() => {
+        scrollTo('selected-book-description')
+    }, 250);
 }
