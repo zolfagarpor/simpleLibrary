@@ -56,13 +56,10 @@ body {
 
 .leftside {
   background: linear-gradient(360deg ,#0c3b5a, #1369584b), url(left.png);
-  margin-left: 1px;
 }
 
 .rightside {
   background: linear-gradient(360deg ,#0c3b5a, #1369584b), url(right.png);
-  margin-right: 1px;
-
 }
 
 .leftside , .rightside{
@@ -263,6 +260,11 @@ h3{
   border-left: 2px solid #2980b9; 
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+
+.book-Count{
+  text-align: center;
 }
 
 #result {
