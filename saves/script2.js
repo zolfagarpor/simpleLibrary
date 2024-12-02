@@ -129,5 +129,5 @@ function getBookDetails(bookTitle) {
     }
     setTimeout(() => {
         scrollTo('selected-book-description')
-    }, 250);
+    }, 700);
 }
