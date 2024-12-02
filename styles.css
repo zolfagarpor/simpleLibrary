@@ -5,13 +5,6 @@
   scroll-behavior: smooth;
 }
 
-html {
-  zoom: 100%; /* برای مرورگرهای مبتنی بر IE */
-  -webkit-transform: scale(1); /* برای کروم */
-  transform: scale(1);
-  transform-origin: top left; /* جلوگیری از زوم کردن */
-}
-
 body {
   font-family: 'Roboto', sans-serif;
   height: 100vh;
