@@ -196,6 +196,11 @@ button:active{
   background-color: #2980b9;
 }
 
+a{
+  color: white;
+  text-decoration: none;
+}
+
 .all-Books-btn{
   width: 100%;
   background-color: #297fb941;
