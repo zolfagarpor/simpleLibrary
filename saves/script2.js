@@ -1,137 +1,466 @@
-const saves = [
-    { title: "طراحی الگوریتم ها",
-    image: "algorithm-design.jpg",
-    description: "این کتاب به بررسی و تحلیل الگوریتم‌های مختلف پرداخته و نحوه انتخاب و طراحی بهترین الگوریتم‌ها برای حل مسائل مختلف را آموزش می‌دهد. موضوعات شامل جستجو، مرتب‌سازی، تقسیم و حل، و برنامه‌نویسی پویا هستند. این مباحث به بهبود کارایی و کاهش زمان اجرای برنامه‌ها کمک می‌کنند." },
-    
-    { title: "ساختمان داده ها", 
-    image: "data-structures.jpg", 
-    description: "کتابی که به مفاهیم پایه‌ای ساختمان داده‌ها مانند آرایه‌ها، لیست‌های پیوندی، درخت‌ها، گراف‌ها و جداول هش پرداخته و روش‌های مختلف دسترسی و مدیریت داده‌ها را آموزش می‌دهد. شناخت ساختمان داده‌ها به بهینه‌سازی عملکرد الگوریتم‌ها کمک می‌کند. استفاده از این ساختارها در حل مسائل پیچیده ضروری است." },
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
 
-    { title: "مدار های الکترونیکی", 
-    image: "electronic-circuits.jpg", 
-    description: "این کتاب اصول طراحی و تحلیل مدارهای الکترونیکی آنالوگ و دیجیتال را پوشش می‌دهد. مباحثی چون دیودها، ترانزیستورها، تقویت‌کننده‌ها و مدارهای منطقی در این کتاب مطرح می‌شود. آشنایی با این مفاهیم برای طراحی مدارهای عملی و مفهومی ضروری است." },
+body {
+  font-family: 'Roboto', sans-serif;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(360deg ,#0c3b5a 0%, #136958 100%);
+  overflow: hidden;
+  animation: gradient 10s ease infinite;
+  color: #fff;
+  padding: 0 20px;
+  background-size: 400% 400%;
+  background-attachment: fixed;
+}
 
-    { title: "سیگنال ها و سیستم ها", 
-    image: "signals-systems.jpg", 
-    description: "این کتاب به بررسی اصول پایه‌ای سیگنال‌ها و سیستم‌ها در پردازش سیگنال‌ها می‌پردازد. مفاهیمی مانند تبدیل فوریه، فیلترها، و سیستم‌های خطی و غیرخطی در آن توضیح داده می‌شود. این دانش در زمینه‌های مختلف مهندسی برق و ارتباطات کاربرد دارد." },
+@keyframes gradient {
+  0%{
+    background-position: 0% 0%;
+  }
+  50%{
+    background-position: 100% 100%;
+  }
+  100%{
+    background-position: 0% 0%;
+  }
+}
 
-    { title: "هوش مصنوعی", 
-    image: "artificial-intelligence.jpg", 
-    description: "کتابی که به مفاهیم پایه‌ای هوش مصنوعی شامل جستجو، یادگیری ماشین، منطق فازی و سیستم‌های خبره می‌پردازد. هدف آن ایجاد ماشین‌هایی است که قادر به حل مسائل به‌طور هوشمندانه باشند. در این کتاب، الگوریتم‌های هوش مصنوعی در حل مسائل دنیای واقعی معرفی می‌شود." },
+.intro{
+  position: absolute;
+  top: 0%;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
 
-    { title: "سیستم های عامل", 
-    image: "operating-systems.jpg", 
-    description: "این کتاب به تشریح عملکرد سیستم‌های عامل از جمله مدیریت منابع، فرآیندها، حافظه و سیستم فایل‌ها می‌پردازد. نحوه تعامل نرم‌افزار با سخت‌افزار و خدماتی که سیستم‌عامل برای برنامه‌ها فراهم می‌کند، در این کتاب توضیح داده می‌شود. دانش سیستم‌های عامل برای طراحی و استفاده از کامپیوترها ضروری است." },
+.leftside , .rightside{
+  position: relative;
+  width: 50%;
+  height: 100vh;
+  z-index: 99;
+  transition: transform 1s linear, opacity 0.2s linear;
+}
 
-    { title: "طراحی پایگاه داده ها", 
-    image: "database-design.jpg", 
-    description: "این کتاب اصول طراحی و مدیریت پایگاه‌های داده رابطه‌ای را آموزش می‌دهد. موضوعاتی مانند مدل‌های داده‌ای، طراحی پایگاه داده، زبان SQL و بهینه‌سازی پرس‌وجوها در این کتاب بررسی می‌شوند. این مفاهیم برای ساخت سیستم‌های اطلاعاتی و مدیریت داده‌ها بسیار مهم است." },
+.leftside {
+  background: linear-gradient(360deg ,#0c3b5a, #1369584b), url(left.png);
+  margin-left: 1px;
+}
 
-    { title: "اصول طراحی کامپایلر", 
-    image: "compiler-principles.jpg", 
-    description: "کتابی که فرآیند طراحی کامپایلرها، از جمله تحلیل لغوی، نحوی، بهینه‌سازی و تولید کد را توضیح می‌دهد. این کتاب به دانشجویان کمک می‌کند تا مراحل تبدیل کد منبع به کد اجرایی را درک کنند. کامپایلرها ابزارهای اصلی در زبان‌های برنامه‌نویسی هستند." },
+.rightside {
+  background: linear-gradient(360deg ,#0c3b5a, #1369584b), url(right.png);
+}
 
-    { title: "شبکه‌ های کامپیوتری", 
-    image: "computer-networks.jpg", 
-    description: "این کتاب به مباحث پایه‌ای شبکه‌های کامپیوتری شامل پروتکل‌ها، معماری شبکه، مسیریابی و امنیت شبکه می‌پردازد. آشنایی با شبکه‌های کامپیوتری برای ارتباطات دیجیتال و اینترنت امری ضروری است. مباحث پیشرفته‌تری مانند شبکه‌های بی‌سیم و IPv6 نیز در آن گنجانده شده است." },
+.leftside , .rightside{
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
 
-    { title: "یادگیری ماشین", 
-    image: "machine-learning.jpg", 
-    description: "در این کتاب الگوریتم‌ها و روش‌های مختلف یادگیری ماشین برای تحلیل داده‌ها و پیش‌بینی نتایج بررسی می‌شوند. از جمله این روش‌ها می‌توان به یادگیری نظارت‌شده، یادگیری بدون نظارت و یادگیری تقویتی اشاره کرد. این مفاهیم برای ایجاد سیستم‌های هوشمند و تحلیل داده‌های پیچیده کاربرد دارند." },
+.wave {
+  background: rgb(255 255 255 / 25%);
+  border-radius: 1000% 1000% 0 0;
+  position: fixed;
+  width: 200%;
+  height: 12em;
+  animation: wave 10s -3s linear infinite;
+  opacity: 0.8;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
 
-    { title: "مدارهای منطقی", 
-    image: "logic-circuits.jpg", 
-    description: "کتابی که اصول طراحی مدارهای منطقی را شامل گیت‌های منطقی، فلیپ‌فلاپ‌ها و ماشین‌های حالت می‌آموزد. این مدارها برای پیاده‌سازی عملیات منطقی در دستگاه‌های دیجیتال استفاده می‌شوند. آشنایی با آن‌ها برای طراحی سیستم‌های دیجیتال مانند پردازنده‌ها و سیستم‌های کنترلی ضروری است." },
+.wave:nth-of-type(2){
+  bottom: -1.25em;
+  animation: wave 13s linear reverse infinite;
+  opacity: 0.8;
+}
+.wave:nth-of-type(3){
+  bottom: -2.5em;
+  animation: wave 18s -1s reverse infinite;
+  opacity: 0.9;
+}
 
-    { title: "مبانی کامپیوتر و برنامه سازی", 
-    image: "computer-basics.jpg", 
-    description: "این کتاب به معرفی مفاهیم پایه‌ای کامپیوتر و زبان‌های برنامه‌نویسی می‌پردازد. موضوعاتی چون ساختار داده‌ها، الگوریتم‌ها، و اصول طراحی نرم‌افزار در آن مطرح می‌شود. این کتاب مبنای خوبی برای یادگیری برنامه‌نویسی و توسعه نرم‌افزار است." },
 
-    { title: "اصول شبکه‌های کامپیوتری", 
-    image: "network-principles.jpg", 
-    description: "کتابی که به اصول و مفاهیم پایه‌ای شبکه‌های کامپیوتری و نحوه عملکرد آن‌ها در اتصال دستگاه‌ها پرداخته است. مباحثی مانند پروتکل‌های اینترنت، مدیریت شبکه و امنیت شبکه در آن مطرح می‌شود. برای طراحی و پیاده‌سازی شبکه‌های محلی و گسترده ضروری است." },
+@keyframes wave {
+  0% {
+    transform: translateX(0);
+  }
+  25%{
+    transform: translateX(-25%);
+  }
+  50%{
+    transform: translateX(-50%);
+  }
+  75%{
+    transform: translateX(-25%);
+  }
+  100%{
+    transform: translateX(0);
+  }
+}
 
-    { title: "امنیت اطلاعات و رمزنگاری", 
-    image: "information-security.jpg", 
-    description: "این کتاب به مباحث امنیت اطلاعات و روش‌های رمزنگاری داده‌ها می‌پردازد. اصول امنیتی مانند الگوریتم‌های رمزنگاری، امضای دیجیتال و امنیت شبکه‌ها در آن توضیح داده می‌شود. این کتاب برای حفاظت از اطلاعات در دنیای دیجیتال امری حیاتی است." },
+.container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  height: 80vh;
+  background-color: #ecf0f1;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  opacity: 0.9;
+} 
 
-    { title: "مهندسی نرم افزار", 
-    image: "software-engineering.jpg", 
-    description: "کتابی که به تحلیل، طراحی و توسعه سیستم‌های نرم‌افزاری می‌پردازد. مدل‌های نرم‌افزاری، فرآیندهای توسعه و تست نرم‌افزار در آن پوشش داده می‌شود. این کتاب به مهندسین نرم‌افزار کمک می‌کند تا سیستم‌های نرم‌افزاری کارآمد و بدون خطا تولید کنند." },
+.search-section {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0c3b5a, #136958); 
+  color: #fff;
+  padding: 40px;
+  text-align: center;
+  border-right: 2px solid #16a085; 
+}
 
-    { title: "تحلیل و طراحی سیستم ها", 
-    image: "systems-analysis.jpg", 
-    description: "این کتاب به فرآیند تحلیل و طراحی سیستم‌ها با رویکرد مهندسی پرداخته و به تشریح نحوه شبیه‌سازی و مدل‌سازی سیستم‌های پیچیده می‌پردازد. موضوعات شامل تحلیل نیازها، طراحی معماری سیستم و پیاده‌سازی مدل‌ها است. این مفاهیم در پروژه‌های بزرگ مهندسی نرم‌افزار کاربرد دارند." },
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+  font-weight: bold;
+  text-shadow: 2px 2px 10px rgba(44, 62, 80, 0.7); 
+}
 
-    { title: "پردازش تصویر دیجیتال", 
-    image: "digital-image-processing.jpg", 
-    description: "این کتاب به تجزیه و تحلیل تصاویر دیجیتال و پردازش آن‌ها با استفاده از الگوریتم‌های ریاضی پرداخته است. موضوعاتی چون فیلتر کردن، تشخیص لبه‌ها و فشرده‌سازی تصویر در آن شرح داده می‌شود. پردازش تصویر در کاربردهای پزشکی، امنیتی و صنعتی مهم است." },
+.search-box {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
 
-    { title: "هوش مصنوعی و یادگیری عمیق", 
-    image: "ai-deep-learning.jpg", 
-    description: "کتابی که به ترکیب مباحث هوش مصنوعی و یادگیری عمیق پرداخته و الگوریتم‌های پیچیده‌تری چون شبکه‌های عصبی عمیق را توضیح می‌دهد. این روش‌ها در شبیه‌سازی مغز انسان برای حل مسائل پیچیده و تحلیل داده‌های بزرگ استفاده می‌شوند. کاربرد آن‌ها در بینایی کامپیوتری و پردازش زبان طبیعی گسترده است." },
+.search{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
 
-    { title: "پردازش زبان طبیعی", 
-    image: "natural-language-processing.jpg", 
-    description: "این کتاب به تحلیل و پردازش زبان‌های انسانی با استفاده از روش‌های هوش مصنوعی می‌پردازد. مباحثی چون تجزیه و تحلیل نحوی، مدل‌های زبانی و ترجمه ماشینی در آن پوشش داده می‌شود. پردازش زبان طبیعی برای ساخت سیستم‌های مبتنی بر زبان مانند چت‌بات‌ها و مترجم‌های ماشینی حیاتی است." },
+.search-input {
+  padding: 12px;
+  font-size: 18px;
+  width: 100%;
+  border: 1px solid #2980b9;
+  border-radius: 10px 0px 0px 10px;
+  background-color: #ffffff;
+  color: #34495e; 
+  transition: all 0.3s ease-in-out;
+  direction: rtl;
+}
 
-    { title: "آمار و احتمالات مهندسی", 
-    image: "statistics-computer-science.jpg", 
-    description: "این کتاب اصول آمار و احتمالات را با تمرکز بر کاربردهای مهندسی شرح می‌دهد. مباحثی چون آزمون‌های فرض، توزیع‌های احتمالاتی و مدل‌سازی تصادفی در آن بررسی می‌شود. این دانش برای تحلیل داده‌های آزمایشگاهی و سیستم‌های پیچیده ضروری است." },
+.search-input:focus {
+  border-color: #1abc9c;
+  box-shadow: 0 0 8px rgba(26, 188, 156, 0.4);
+  outline: none;
+}
 
-    { title: "ریاضیات گسسته و کاربرد های آن", 
-    image: "discrete-mathematics.jpg", 
-    description: "کتابی که به بررسی مفاهیم ریاضیات گسسته مانند گراف‌ها، مجموعه‌ها و نظریه اعداد می‌پردازد. این مفاهیم برای تحلیل الگوریتم‌ها و طراحی سیستم‌های کامپیوتری کاربرد فراوانی دارند. در حل مسائل بهینه‌سازی و رمزنگاری نیز از آن‌ها استفاده می‌شود." },
+button {
+  width: 50%;
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #2980b9;
+  color: #fff;
+  border: none;
+  border-radius: 0px 10px 10px 0px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
 
-    { title: "پردازش سیگنال های دیجیتال", 
-    image: "digital-signal-processing.jpg", 
-    description: "این کتاب به تحلیل و پردازش سیگنال‌های دیجیتال با استفاده از روش‌های ریاضی می‌پردازد. موضوعاتی چون فیلتر کردن، تبدیل فوریه و تحلیل زمان-فرکانس در آن توضیح داده می‌شود. این مفاهیم برای بهبود کیفیت سیگنال‌ها در سیستم‌های مخابراتی و صوتی کاربرد دارند." },
+button:hover {
+  background-color: #1abc9c;
+}
 
-    { title: "مهندسی اینترنت", 
-    image: "internet-engineering.jpg", 
-    description: "کتابی که به اصول و تکنیک‌های مهندسی اینترنت پرداخته و مفاهیم مربوط به توسعه وب، سرویس‌های وب و اینترنت اشیاء را بررسی می‌کند. این کتاب شامل راه‌حل‌های طراحی و پیاده‌سازی سیستم‌های آنلاین و مبتنی بر اینترنت است. برای توسعه اپلیکیشن‌های وب و شبکه‌های اجتماعی حیاتی است." },
+button:active{
+  background-color: #2980b9;
+}
 
-    { title: "رایانش ابری", 
-    image: "cloud-computing.jpg", 
-    description: "این کتاب به بررسی مفاهیم و معماری رایانش ابری پرداخته و نحوه استفاده از منابع محاسباتی از راه دور را توضیح می‌دهد. فناوری‌های IaaS، PaaS و SaaS در آن بررسی می‌شوند. رایانش ابری در کاهش هزینه‌ها و مقیاس‌پذیری سیستم‌های کامپیوتری بسیار مفید است." },
+a{
+  color: white;
+  text-decoration: none;
+}
 
-    { title: "پایگاه داده های توزیع شده", 
-    image: "distributed-databases.jpg", 
-    description: "این کتاب به طراحی و مدیریت پایگاه‌های داده‌ای می‌پردازد که در سیستم‌های توزیع‌شده برای پردازش داده‌ها استفاده می‌شوند. موضوعاتی چون همگام‌سازی داده‌ها، مسأله نگهداری اطلاعات و مقیاس‌پذیری در آن بررسی می‌شود. این مفاهیم برای سیستم‌های بزرگ و توزیع‌شده ضروری است." }
-];
+.all-Books-btn{
+  width: 100%;
+  background-color: #297fb941;
+  border-radius: 20px;
+}
 
-// تابع برای دریافت اطلاعات کتاب
-function getBookDetails(bookTitle) {
-    // جستجو برای کتاب انتخاب شده
-    const save = saves.find(b => b.title === bookTitle);
-    
-    const selectedBookTitleDiv = document.getElementById('selected-book-title');
-    const selectedBookImageDiv = document.getElementById('img-place-holder');
-    const selectedBookdescriptionDiv = document.getElementById('selected-book-description');
+.intro-button{
+  font-size: 25px;
+  font-weight: bold;
+  position: absolute;
+  top: 80%;
+  z-index: 100;
+  width: 13%;
+  background-color: #045B89;
+  border-radius: 20px;
+}
 
-    if (save) {
-        // ذخیره اطلاعات کتاب در متغیرها
-        const bookTitle = save.title;
-        const bookImage = save.image;
-        const bookDescription = save.description;
-        
-        
-        // نمایش اطلاعات کتاب در کنسول (یا استفاده در هر بخش دیگر)
-        console.log('عنوان کتاب:', bookTitle);
-        console.log('تصویر کتاب:', bookImage);
-        console.log('توضیحات کتاب:', bookDescription);
-        
-        // اگر بخواهید این اطلاعات را در جایی در HTML نمایش دهید، می‌توانید اینجا از آنها استفاده کنید
+.intro-button:hover {
+  background-color: #0F2332;
+}
 
-        selectedBookTitleDiv.textContent =  bookTitle;
-        selectedBookImageDiv.innerHTML = `<img src="saves/images/${bookImage}" id="selected-book-image" class="selected-book-image">`;
-        selectedBookdescriptionDiv.textContent =  bookDescription;
+.intro-button:active{
+  background-color: #045B89;
+}
 
-        // اطمینان از بارگذاری کامل تصویر قبل از اسکرول
-        const imageElement = document.getElementById('selected-book-image');
-        imageElement.onload = () => {
-            // تصویر بارگذاری شده، حالا اسکرول می‌کنیم
-            scrollTo('selected-book-description')
-        };
-    }
+.details-box{
+  height: 50%;
+  width: 100%;
+  display: flex;
+  margin-top: 5%;
+}
+
+.intro-text , h4{
+  text-align: justify;
+  direction: rtl;
+}
+
+h4{
+text-align: center;
+}
+
+h3{
+  margin-bottom: 5%;
+}
+
+.intro-text{
+  margin-bottom: 5%;
+}
+
+.result-section {
+  width: 50%;
+  background-color: #ecf0f1; 
+  padding: 40px;
+  color: #2c3e50; 
+  overflow-y: auto;
+  font-size: 16px;
+  border-left: 2px solid #2980b9; 
+  display: flex;
+  justify-content: center;
+}
+
+#result {
+  text-align: justify;
+  direction: rtl;
+  color: #34495e;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.result-text{
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.result-text:hover{
+  color:rgb(96, 149, 202);
+}
+
+.result-text:active{
+  color: rgb(39, 63, 87);
+}
+.book-details{
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-book-title, .selected-book-image, .selected-book-description{
+  direction: rtl;
+  align-self: center;
+}
+
+
+.selected-book-title{
+  height: 5%;
+  margin-bottom: 5%;
+}
+
+.img-place-holder{
+  width: 100%;
+  height: 60%;
+  margin-bottom: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected-book-image{
+  height: 100%;
+  width: 70%;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+}
+
+.selected-book-description{
+  height: 40%;
+  text-align: justify;
+}
+
+#backToTop {
+  z-index: -1;
+  opacity: 0;
+}
+
+
+
+@media (max-width: 768px) {
+  
+  body{
+    overflow: hidden;
+    overflow-x: hidden;
+    padding-bottom: auto;
+    background: unset;
+  }
+
+  .wave {
+    display: none;
+  }
+  
+  .wave:nth-of-type(2){
+    display: none;
+  }
+  .wave:nth-of-type(3){
+    display: none;
+  }
+
+  .intro{
+    position: absolute;
+    top: 0%;
+    height: 100vh;
+  }
+  
+  .leftside , .rightside{
+    height: 100vh;
+  }
+
+  .container {
+    height: 100%;
+    flex-direction: column;
+    overflow: scroll;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    border-radius: unset;
+    box-shadow: unset;
+    display: unset;
+  }
+
+  .search-section {
+    border-right: unset; 
+  }
+
+  .search-input {
+    font-size: 15px;
+  }
+
+  .result-section{
+    overflow: visible;
+  }
+
+  .search-section, .result-section {
+    width: 100%;
+    height: auto;
+  }
+ 
+  .result-section {
+    border-left: unset; 
+  }
+
+  .intro-button{
+    width: auto;
+  }
+
+  .img-place-holder{
+    width: 100%;
+    height: 60%;
+    margin-bottom: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .selected-book-image{
+    height: 100%;
+    width: 70%;
+    display: unset;
+    justify-self: unset;
+    align-self: unset;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  #backToTop {
+    z-index: 99;
+    opacity: 1;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: #0D405A;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0.5;
+    transition: opacity 0.3s,background-color 0.2s ;
+  }
+  
+  #backToTop:hover {
+    background-color: #136658;
+    opacity: 1;
+  }
+
+  #backToTop:active {
+    background-color: #0D415A;
+  }
+
+}
+
+@media only screen and (min-width: 1100px) {
+  .leftside , .rightside{
+    position: relative;
+    width: 50%;
+    height: 100%;
+    z-index: 99;
+    transition: transform 1s linear , opacity 0.2s linear;
+  }
+  
+  .leftside {
+    background: linear-gradient(360deg ,#0c3b5a, #1369584b), url(Untitled-1.1.png);
+  }
+  
+  .rightside {
+    background: linear-gradient(360deg ,#0c3b5a, #1369584b), url(Untitled-1.2.png);
+  }
+  
+  .leftside , .rightside{
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1;
+  }
 }
