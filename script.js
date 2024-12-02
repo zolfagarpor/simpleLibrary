@@ -293,10 +293,14 @@ function showAllBooks() {
 
     // مرتب‌سازی آرایه کتاب‌ها بر اساس حروف الفبای فارسی
     const sortedBooks = books.sort((a, b) => a.localeCompare(b, 'fa'));
+    
+    const bookCountDiv = document.getElementById('book-Count');
+    bookCountDiv.textContent = '';
 
     setTimeout(() => {
+        bookCountDiv.textContent = `تعداد کتاب های یافت شده: ` + `${books.length}`
         resultDiv.innerHTML = sortedBooks
-                .map((book,index) => `<p  id="book ${index}"  class="result-text" onclick="selectBook('${book}')">کتاب ${book}</p>`)
+                .map((book,index) => `<p  id="book ${index+1}"  class="result-text" onclick="selectBook('${book}')">${index+1}-کتاب ${book}</p>`)
                 .join('');
         scrollTo('result');        
     }, 200);
