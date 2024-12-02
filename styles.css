@@ -361,6 +361,7 @@ h3{
     overflow: scroll;
     position: absolute;
     top: 0%;
+    border-radius: unset;
   }
 
   .search-section {
