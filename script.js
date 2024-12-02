@@ -275,7 +275,7 @@ function searchBook() {
         } else{
             resultDiv.textContent = 'کتابی یافت نشد. لطفا در وارد کردن اسم کتاب دقت کنید.';
         }
-        scrollToBook();   
+        scrollToBook('book 1');   
     }, 200);
 }
 
@@ -298,13 +298,13 @@ function showAllBooks() {
         resultDiv.innerHTML = sortedBooks
                 .map((book,index) => `<p  id="book ${index}"  class="result-text" onclick="selectBook('${book}')">کتاب ${book}</p>`)
                 .join('');
-        scrollToBook();        
+        scrollToBook('result');        
     }, 200);
 
 }
 
-function scrollToBook() {
-    const element = document.getElementById('result');
+function scrollToBook(id) {
+    const element = document.getElementById(id);
     element.scrollIntoView({ behavior: 'smooth' });
 }
 
