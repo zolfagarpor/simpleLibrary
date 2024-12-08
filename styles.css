@@ -263,7 +263,6 @@ h3{
 }
 
 #result {
-  text-align: justify;
   direction: rtl;
   color: #34495e;
   font-size: 18px;
@@ -324,36 +323,24 @@ h3{
   opacity: 0;
 }
 
-@media (max-width: 1366px){
-  body {
-    padding: 20px;
-    background-size: 300% 300%; /* برای جلوگیری از تکرار بیش‌ازحد گرادیان */
-  }
-
+@media (max-width: 1300px) {
   .container {
-    max-width: 1000px; /* محدود کردن عرض کانتینر */
-    height: 70vh; /* کاهش ارتفاع کانتینر */
-  }
-
-  h1 {
-    font-size: 2rem; /* کاهش اندازه تیتر */
-  }
-
-  .search-input {
-    font-size: 16px;
-  }
-
-  button {
-    font-size: 16px;
-    padding: 10px 20px;
-  }
-
-  .intro-button {
-    width: 10%;
-    font-size: 18px;
-  }
+    max-width: 1100px;
+    min-height: 500px;
+  } 
 }
 
+@media (max-height: 650px){
+  body{
+    height: 100%;
+    overflow: visible;
+    padding: 60px 0;
+  }
+  
+  .container {
+    max-width: 800px;
+  } 
+}
 
 @media (max-width: 768px) {
   
