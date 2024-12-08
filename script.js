@@ -202,6 +202,8 @@ function searchBook() {
     selectedBookImageDiv.textContent = ' ';
     selectedBookdescriptionDiv.textContent =  '';
 
+    document.querySelector('.book-details').style.display = 'none';
+
     let searchInput = document.getElementById('searchInput').value.trim();
     
     // حذف اسپیس های اضافی
@@ -288,6 +290,8 @@ function showAllBooks() {
     selectedBookImageDiv.textContent = ' ';
     selectedBookdescriptionDiv.textContent =  '';
 
+    document.querySelector('.book-details').style.display = 'none';
+
     const resultDiv = document.getElementById('result');
     resultDiv.textContent = ''; // پاک کردن نتیجه قبلی
 
@@ -321,6 +325,8 @@ let selectedBook = null;
 // تابع برای انتخاب کتاب
 function selectBook(bookName) {
     selectedBook = bookName;
+
+    document.querySelector('.book-details').style.display = 'flex';
 
     const resultDiv = document.getElementById('result');
     resultDiv.textContent = '';
@@ -363,5 +369,6 @@ function animateBackground() {
     // پس از گذشت یک ثانیه مقدار زد ایندکس عنصر اینترو به 0 تنظیم می شود
     setTimeout(() => {
         intro.style.zIndex = '0';
+        intro.style.display = 'none';
     },  1000);
 }
