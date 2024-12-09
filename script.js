@@ -194,6 +194,8 @@ function checkAllSingleLetterWords(input) {
 }
 
 function searchBook() {
+    document.querySelector('.result').style.display = 'unset';
+
     const selectedBookTitleDiv = document.getElementById('selected-book-title');
     const selectedBookImageDiv = document.getElementById('img-place-holder');
     const selectedBookdescriptionDiv = document.getElementById('selected-book-description');
@@ -217,8 +219,6 @@ function searchBook() {
 
     const resultDiv = document.getElementById('result');
     resultDiv.textContent = ''; // پاک کردن نتیجه قبلی
-
-    document.querySelector('.result').style.display = 'unset';
 
     setTimeout(() => {
 
