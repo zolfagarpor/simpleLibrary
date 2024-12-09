@@ -1,3 +1,4 @@
+// لیستی از اشیا که اسم کتابی که کاربر انتخاب کرده محتواش از داخل این لیست استخراج میشه
 const saves = [
     { title: "طراحی الگوریتم ها",
     image: "algorithm-design.jpg",
@@ -100,34 +101,30 @@ const saves = [
     description: "این کتاب به طراحی و مدیریت پایگاه‌های داده‌ای می‌پردازد که در سیستم‌های توزیع‌شده برای پردازش داده‌ها استفاده می‌شوند. موضوعاتی چون همگام‌سازی داده‌ها، مسأله نگهداری اطلاعات و مقیاس‌پذیری در آن بررسی می‌شود. این مفاهیم برای سیستم‌های بزرگ و توزیع‌شده ضروری است." }
 ];
 
-// تابع برای دریافت اطلاعات کتاب
+// تابع برای دریافت اطلاعات کتاب و نمایش ان در صفحه
 function getBookDetails(bookTitle) {
-    // جستجو برای کتاب انتخاب شده
+    // جستجو برای کتاب انتخاب شده و ذخیره هر 3 محتوای ان در این متغییر
     const save = saves.find(b => b.title === bookTitle);
     
+    // اتصال هر کدام از تگ هایی که با ایدی مشخص شده به متغییر تعریف شده
     const selectedBookTitleDiv = document.getElementById('selected-book-title');
     const selectedBookImageDiv = document.getElementById('img-place-holder');
     const selectedBookdescriptionDiv = document.getElementById('selected-book-description');
 
+    
     if (save) {
-        // ذخیره اطلاعات کتاب در متغیرها
+        // ذخیره محتوای کتاب به صورت جداگانه در متغیرها
         const bookTitle = save.title;
         const bookImage = save.image;
         const bookDescription = save.description;
         
-        
-        // نمایش اطلاعات کتاب در کنسول (یا استفاده در هر بخش دیگر)
-        console.log('عنوان کتاب:', bookTitle);
-        console.log('تصویر کتاب:', bookImage);
-        console.log('توضیحات کتاب:', bookDescription);
-        
-        // اگر بخواهید این اطلاعات را در جایی در HTML نمایش دهید، می‌توانید اینجا از آنها استفاده کنید
-
+        // قرار دادن هر یک از محتوا ها در تگ های خود در اچ تی ام ال
         selectedBookTitleDiv.textContent =  bookTitle;
         selectedBookImageDiv.innerHTML = `<img src="saves/images/${bookImage}" id="selected-book-image" class="selected-book-image">`;
         selectedBookdescriptionDiv.textContent =  bookDescription;
 
         // اطمینان از بارگذاری کامل تصویر قبل از اسکرول
+        // برای حالت موبایل کاربر دارد
         const imageElement = document.getElementById('selected-book-image');
         imageElement.onload = () => {
             // تصویر بارگذاری شده، حالا اسکرول می‌کنیم
