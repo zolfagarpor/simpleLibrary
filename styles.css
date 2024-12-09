@@ -271,6 +271,7 @@ h3{
   font-size: 18px;
   margin-top: 20px;
   margin-bottom: 20px;
+  display: unset;
 }
 
 .result-text{
@@ -286,9 +287,11 @@ h3{
 .result-text:active{
   color: rgb(39, 63, 87);
 }
+
 .book-details{
   display: flex;
   flex-direction: column;
+  margin-top: 40px;
 }
 
 .selected-book-title, .selected-book-image, .selected-book-description{
