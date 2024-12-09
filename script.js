@@ -216,8 +216,9 @@ function searchBook() {
     const containsIrrelevantWords = inputWords.every(word => irrelevantWords.includes(word));
 
     const resultDiv = document.getElementById('result');
-    
     resultDiv.textContent = ''; // پاک کردن نتیجه قبلی
+
+    document.querySelector('.result').style.display = 'unset';
 
     setTimeout(() => {
 
