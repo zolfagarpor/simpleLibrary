@@ -296,7 +296,7 @@ function showAllBooks() {
     const resultDiv = document.getElementById('result');
     resultDiv.textContent = ''; // پاک کردن نتیجه قبلی
 
-    document.querySelector('.result').style.display = 'unset';
+    document.querySelector('.result').style.display = 'block';
 
     // مرتب‌سازی آرایه کتاب‌ها بر اساس حروف الفبای فارسی
     const sortedBooks = books.sort((a, b) => a.localeCompare(b, 'fa'));
