@@ -27,7 +27,7 @@ function lsDistance(a, b) {
     return matrix[b.length][a.length]; // فاصله نهایی
 }
 
-
+// لیستی از اسم کتاب های موجود
 let books = [
     "طراحی الگوریتم ها",
     "ساختمان داده ها",
@@ -56,7 +56,7 @@ let books = [
     "پایگاه داده های توزیع شده"
 ];
 
-// کلمات غیرکلیدی برای جستجوی کتاب
+// کلمات غیرمفید برای جستجوی کتاب
 const irrelevantWords = [
     "در", "با", "از", "برای", "به", "تا", "که", "و", "یا", "فقط", "چند",
     "آن", "این", "هم", "هنگام", "پس", "اما", "اگر", "بهتر", "سایر", "شده",
@@ -74,7 +74,9 @@ const SpecialCharacters = [
     "؟","'",'"',":",";","|","`","~","«", "»","،"
 ]
 
-// تابع شناسایی کلمات غیر مفید با اشتباه تایپی
+// تابع شناسایی و حذف کلمات غیر مفید با اشتباه تایپی
+// کلمات ورودی با کلمه های غیر مفیدی که قبلا در لیستش تعریف شده مقایسه می شود(با 1 فاصله لون اشتاین)
+// و کلمات غیر مفید داخل ورودی کاربر شناسایی می شوند
 function detectIrrelevantWordsMistake(inputWords) {
     return inputWords.filter(word => 
         irrelevantWords.some(irrelevant => lsDistance(word, irrelevant) <= 1)
@@ -89,13 +91,14 @@ function filterIrrelevantWords(input) {
     // حذف کلمات غیر مفید و کلمات با اشتباه تایپی
     return inputWords
         .filter(word => !irrelevantWords.includes(word) && !detectedIrrelevantWordsWithMistake.includes(word))
-        .join(' '); // تبدیل دوباره به رشته
+        .join(' '); // تبدیل دوباره لیستی از کلمه های ورودی به رشته
 }
 
+
+// تابعی یافتن کتاب ها بر اساس ورودی کاربر
 function findBooks(input) { 
     // مرتب‌سازی آرایه کتاب‌ها بر اساس حروف الفبای فارسی
     books = books.sort((a, b) => a.localeCompare(b, 'fa'));
-
 
     // حذف کلمات غیر مفید از ورودی
     input = filterIrrelevantWords(input);
@@ -126,7 +129,7 @@ function findBooks(input) {
     });
 
     if (WordMatches2.length > 0) {
-        return WordMatches2; // کتاب‌هایی که شامل کلمات ورودی با شباهت هستند را بر می‌گرداند
+        return WordMatches2; // کتاب‌هایی که شامل کلمات ورودی با 1 اشتباهی تایپی در کلمه هستند را بر می‌گرداند
     }
 
 
@@ -142,7 +145,7 @@ function findBooks(input) {
         });
 
         if (WordMatches1WithLoop.length > 0) {
-            return WordMatches1WithLoop; // کتاب هایی که شامل کلمات ورودی هستند را بر می گرداند
+            return WordMatches1WithLoop; // کتاب هایی که شامل یکی از کلمات ورودی هستند را بر می گرداند
         }
     }
 
@@ -158,11 +161,11 @@ function findBooks(input) {
         });
     
         if (WordMatches2WithLoop.length > 0) {
-            return WordMatches2WithLoop; // کتاب‌هایی که شامل کلمات ورودی با شباهت (فاصله لون اشتاین) هستند را بر می‌گرداند
+            return WordMatches2WithLoop; // کتاب‌هایی که شامل یکی از کلمات ورودی با شباهت (فاصله لون اشتاین 1) هستند را بر می‌گرداند
         }
     }
     
-    // در صورتی شرایط ورودی به گونه ای بود که توسط کد های بالا نتیجه ای پیدا نشد
+    // در صورتی که شرایط ورودی به گونه ای بود که توسط کد های بالا نتیجه ای پیدا نشد
     // یک لیست خالی ریترن می کنیم 
     // و طبق دستورات تابع اخر ، اگر نتیجه ای حاصل نشود ، در خروجی کتابی یافت نشد را چاپ میکند
     return []
@@ -179,6 +182,7 @@ function cleanInput(input) {
     return input;
 }
 
+// بررسی می کند که همه اجزای ورودی کاربر به صورت کلمه های تک حرفی هستند یا نه
 function checkAllSingleLetterWords(input) {
     const words = input.split(' '); // ورودی را بر اساس اسپیس جدا می‌کنیم
     // بررسی اینکه آیا تمام کلمات یک حرفی هستند
@@ -189,37 +193,44 @@ function checkAllSingleLetterWords(input) {
         return input;
     }
 
-    // در غیر این صورت آرایه خالی باز می‌گرداند
+    // در غیر این صورت نال برگردانده می شود تا آن شرط اجرا نشود
     return null;
 }
 
+
+// تابعی که با کلیک بر روی دکمه جستجو اجرا می شود و مراحل جستجو شروع می شود
 function searchBook() {
+    // تغییر دیسپلی دیو ریزالت به حالت دیفالت  تا نتایج نشان داده شوند
     document.querySelector('.result').style.display = 'block';
 
+    // برای خالی کردن محتوای داخل هر یک از دیو های سلکت شده
     const selectedBookTitleDiv = document.getElementById('selected-book-title');
     const selectedBookImageDiv = document.getElementById('img-place-holder');
     const selectedBookdescriptionDiv = document.getElementById('selected-book-description');
-    
     selectedBookTitleDiv.textContent =  '';
     selectedBookImageDiv.textContent = ' ';
     selectedBookdescriptionDiv.textContent =  '';
 
+    // تغییر دیسپلی دیو بوک دیتیلز به نان تا کلا نمایش داده نشود و جا نگیرد در صفحه
     document.querySelector('.book-details').style.display = 'none';
 
+    // گرفتن ورودی کاربر از اینپوت و ذخیره آن داخل متغییر سرچ اینپوت
     let searchInput = document.getElementById('searchInput').value.trim();
     
-    // حذف اسپیس های اضافی
+    // حذف اسپیس های اضافی به وسیله تابعی که در بالا تعریف کردیم
     searchInput = cleanInput(searchInput);
     
-    // ذخیره کلمات ورودی 
+    // ذخیره کلمات ورودی داخل لیست با متد اسپلیت
     const inputWords = searchInput.split(' ');
     
-    // چک کردن اینکه آیا ورودی فقط یک کلمه غیرمفید است
+    // چک کردن اینکه آیا ورودی فقط کلمه غیرمفید است
     const containsIrrelevantWords = inputWords.every(word => irrelevantWords.includes(word));
 
+    // اتصال متغییر ریزالت دیو به تگ دیوی که با ایدی ریزالت تعریف شده در اچ تی ام ال
     const resultDiv = document.getElementById('result');
     resultDiv.textContent = ''; // پاک کردن نتیجه قبلی
 
+    // استفاده از تابع ست تایم اوت برای نشان دادن نتیجه بعد از 2دهم ثانیه
     setTimeout(() => {
 
         // بررسی اینکه آیا تمام کلمات ورودی یک حرفی هستند
@@ -229,34 +240,34 @@ function searchBook() {
             return;
         }
 
-        // اگر ورودی فقط یک کلمه غیر مفید باشد
+        // اگر ورودی فقط کلمه غیر مفید باشد
         if (containsIrrelevantWords) {
             resultDiv.textContent = 'لطفاً از وارد کردن کلمات غیرمفید (مانند حروف ربط و اضافه) خودداری کنید. برای جستجو، نام یک کتاب یا عبارت معنادار وارد کنید';
             return;
         }
         
-        // بررسی نداشتن کاراکتر خاص
+        // بررسی داشتن کاراکتر خاص
         const hasSpecialCharacters = SpecialCharacters.some(char => searchInput.includes(char))
         if(hasSpecialCharacters) {
             resultDiv.textContent = 'نام کتاب نمیتواند شامل کلمات خاص باشد';
             return;
         }
 
-        // بررسی اینکه ورودی شامل حروف انگلیسی است یا نه
+        // بررسی اینکه ورودی شامل حروف انگلیسی است
         const isEnglishInput = /[A-Za-z]/.test(searchInput);
         if (isEnglishInput) {
             resultDiv.textContent = 'لطفا به فارسی جستجو کنید.';
             return;
         }
 
-        // بررسی اینکه ورودی شامل عدد است یا نه
+        // بررسی اینکه ورودی شامل عدد است
         const hasNumber = /[0-9]/.test(searchInput);
         if (hasNumber) {
             resultDiv.textContent = 'لطفا به فارسی جستجو کنید.';
             return;
         }
 
-        // بررسی 2 حرفی یا کمتر از 2 حرفی نبودن ورودی
+        // بررسی 2 یا 1 حرف باشد
         if (searchInput.length <= 2 && searchInput.length >= 1){
             resultDiv.textContent = 'لطفا نام یا کلمه ای از کتاب را به صورت کامل وارد کنید.';
             return;
@@ -268,48 +279,66 @@ function searchBook() {
             return; 
         }
 
+        // بعد از اینکه تمام مراحل بالا سپری شد
+        // حالا ورودی را به تابع فایند بوک داده تا کتاب ها یافت شوند و داخل متغییر ذخیره شوند
         const similarBooks = findBooks(searchInput);
+
+        // اگه کتابی یافت بشه یعنی طول لیست بیشتر از 0 باشه
         if (similarBooks.length > 0) {
             resultDiv.innerHTML = `<p style="text-align: center; margin-bottom: 10px;">تعداد کتاب های یافت شده: ${similarBooks.length}</p>` + similarBooks
                 .map((book,index) => `<p  id="book ${index+1}"  class="result-text" onclick="selectBook('${book}')">${index+1}-کتاب ${book}</p>`)
                 .join(''); // هر کتاب را در یک پاراگراف جداگانه نمایش می‌دهد
-        } else if(similarBooks === 0) {
+
+        } else if(similarBooks === 0) { // اگه طول لیست صفر باشه (یعنی با استفاده از دستوراتی که در تابع فایند بوک بود ورودی حذف شده و لیست خالی شده)
             resultDiv.textContent = 'لطفاً از وارد کردن کلمات غیرمفید (مانند حروف ربط و اضافه) خودداری کنید. برای جستجو، نام یک کتاب یا عبارت معنادار وارد کنید';
-        } else{
+
+        } else{ // اگه اصلا کتابی یافت نشده باشه
             resultDiv.textContent = 'کتابی یافت نشد. لطفا در وارد کردن اسم کتاب دقت کنید.';
         }   
+
+        // اسکرول به دیو ریزالت
         scrollTo('result');
     }, 200);
 }
 
+// تابعی که با کلیک بر روی دکمه تمامی کتاب ها اجرا می شود و تمامی کتاب ها نمایش داده می شوند
 function showAllBooks() {
+
+    // برای خالی کردن محتوای داخل هر یک از دیو های سلکت شده
     const selectedBookTitleDiv = document.getElementById('selected-book-title');
     const selectedBookImageDiv = document.getElementById('img-place-holder');
     const selectedBookdescriptionDiv = document.getElementById('selected-book-description');
-    
     selectedBookTitleDiv.textContent =  '';
     selectedBookImageDiv.textContent = ' ';
     selectedBookdescriptionDiv.textContent =  '';
 
+    // تغییر دیسپلی دیو بوک دیتیلز به نان تا کلا نمایش داده نشود و جا نگیرد در صفحه
     document.querySelector('.book-details').style.display = 'none';
 
+    // اتصال متغییر ریزالت دیو به تگ دیوی که با ایدی ریزالت تعریف شده در اچ تی ام ال
     const resultDiv = document.getElementById('result');
     resultDiv.textContent = ''; // پاک کردن نتیجه قبلی
 
+    // تغییر دیسپلی دیو ریزالت به حالت دیفالت  تا نتایج نشان داده شوند
     document.querySelector('.result').style.display = 'block';
 
     // مرتب‌سازی آرایه کتاب‌ها بر اساس حروف الفبای فارسی
     const sortedBooks = books.sort((a, b) => a.localeCompare(b, 'fa'));
     
+    // استفاده از تابع ست تایم اوت برای نشان دادن نتیجه بعد از 2دهم ثانیه
     setTimeout(() => {
         resultDiv.innerHTML = `<p style="text-align: center; margin-bottom: 10px;">تعداد کتاب های یافت شده: ${sortedBooks.length}</p>` + sortedBooks
                 .map((book,index) => `<p  id="book ${index+1}"  class="result-text" onclick="selectBook('${book}')">${index+1}-کتاب ${book}</p>`)
                 .join('');
+
+        // برای اسکرول صفحه به تگ ریزالت
         scrollTo('result');        
     }, 200);
 
 }
 
+// برای استفاده جهت اسکرول صفحه
+// فقط برای اسکرول در حالت موبایل
 function scrollTo(id) {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
 
@@ -322,24 +351,34 @@ function scrollTo(id) {
     }
 }
 
-// متغیر برای ذخیره کتاب انتخاب شده
+// متغیر سراسری با مقدار پیش فرض نال برای ذخیره کتاب انتخاب شده
 let selectedBook = null;
 
-// تابع برای انتخاب کتاب
+// تابع برای انتخاب کتاب و نمایش محتوای آن کتاب
 function selectBook(bookName) {
+    // با توجه به این که تگ هر اسم کتاب با کلیک بر روی ان اسم کتاب را به ورودی 
+    // این تابع می دهد ، آن اسم کتاب در متغییر سلکتید بوک ذخیره می شود
     selectedBook = bookName;
 
+    // برای برگرداندن دیسپلی تگی که با کلاس بوک دیتیلز تعریف شده به حالت قبلیش
+    // تا محتوا بتونه در صفحه نمایش داده بشه
     document.querySelector('.book-details').style.display = 'flex';
 
+    // اتصال متغییر ریزالت دیو به تگ دیوی که با ایدی ریزالت تعریف شده در اچ تی ام ال
     const resultDiv = document.getElementById('result');
-    resultDiv.textContent = '';
+    resultDiv.textContent = ''; // پاک کردن نتیجه قبلی
 
-    console.log('کتاب انتخاب شده:', selectedBook);
+    // استفاده از تابعی که در فایل جاوا اسکریپت دومی که تعریف شده
+    // نام کتاب انتخاب شدرو به عنوان ورودی میگیره
+    // و محتوای ان کتاب رو نشون میده در صفحه
     getBookDetails(selectedBook);
 
+    // تغییر دیسپلی تگ ریزالت به نان تا در صفحه جا اشغال نکند
     document.querySelector('.result').style.display = 'none';
 }
 
+// برای اینکه وقتی کاربر بر روی اینپوت کلیک کرده و اینپوت فعاله
+// اگه اینتر رو بزنه همان عمل جستجو انجام بشه بدون کلیک بر روی دکمه جستجو
 document.addEventListener("keydown", function(event) {
     // برای بررسی اینکه آیا فیلد ورودی فوکوس دارد
     const inputField = document.getElementById('searchInput');
@@ -349,7 +388,7 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
-
+// برای حرکت دادن به صفحه اینترو
 function animateBackground() {
     // حرکت دادن بخش‌های چپ و راست
     document.querySelector('.leftside').style.transform = 'translateX(-100%)';
