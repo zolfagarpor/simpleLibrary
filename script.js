@@ -194,7 +194,7 @@ function checkAllSingleLetterWords(input) {
 }
 
 function searchBook() {
-    document.querySelector('.result').style.display = 'unset';
+    document.querySelector('.result').style.display = 'block';
 
     const selectedBookTitleDiv = document.getElementById('selected-book-title');
     const selectedBookImageDiv = document.getElementById('img-place-holder');
