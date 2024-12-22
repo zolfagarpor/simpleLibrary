@@ -100,7 +100,7 @@ function findBooks(input) {
     // مرتب‌سازی آرایه کتاب‌ها بر اساس حروف الفبای فارسی
     books = books.sort((a, b) => a.localeCompare(b, 'fa'));
 
-    // حذف کلمات غیر مفید از ورودی
+    // حذف کلمات غیر مفید و کاراکتر های خاص از ورودی
     input = filterIrrelevantWordsAndSpecialCharacters(input);
 
     // اگه حذف کرد و ورودی خالی بود
