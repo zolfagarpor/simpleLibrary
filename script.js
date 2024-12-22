@@ -74,7 +74,7 @@ const SpecialCharacters = [
     "؟","'",'"',":",";","|","`","~","«", "»","،"
 ]
 
-// تابع شناسایی و حذف کلمات غیر مفید با اشتباه تایپی
+// تابع شناسایی کلمات غیر مفید با اشتباه تایپی
 // کلمات ورودی با کلمه های غیر مفیدی که قبلا در لیستش تعریف شده مقایسه می شود(با 1 فاصله لون اشتاین)
 // و کلمات غیر مفید داخل ورودی کاربر شناسایی می شوند
 function detectIrrelevantWordsMistake(inputWords) {
@@ -83,25 +83,25 @@ function detectIrrelevantWordsMistake(inputWords) {
     );
 }
 
-// حذف کلمات غیر مفید از ورودی
-function filterIrrelevantWords(input) {
+// حذف کلمات غیر مفید و کاراکتر های خاص از ورودی
+function filterIrrelevantWordsAndSpecialCharacters(input) {
     const inputWords = input.split(' '); // جدا کردن کلمات ورودی با اسپیس
     const detectedIrrelevantWordsWithMistake = detectIrrelevantWordsMistake(inputWords); // شناسایی کلمات غیر مفید با اشتباه تایپی
 
     // حذف کلمات غیر مفید و کلمات با اشتباه تایپی
     return inputWords
-        .filter(word => !irrelevantWords.includes(word) && !detectedIrrelevantWordsWithMistake.includes(word))
+        .filter(word => !irrelevantWords.includes(word) && !detectedIrrelevantWordsWithMistake.includes(word) && !SpecialCharacters.includes(word))
         .join(' '); // تبدیل دوباره لیستی از کلمه های ورودی به رشته
 }
 
 
-// تابعی یافتن کتاب ها بر اساس ورودی کاربر
+// تابع یافتن کتاب ها بر اساس ورودی کاربر
 function findBooks(input) { 
     // مرتب‌سازی آرایه کتاب‌ها بر اساس حروف الفبای فارسی
     books = books.sort((a, b) => a.localeCompare(b, 'fa'));
 
     // حذف کلمات غیر مفید از ورودی
-    input = filterIrrelevantWords(input);
+    input = filterIrrelevantWordsAndSpecialCharacters(input);
 
     // اگه حذف کرد و ورودی خالی بود
     if (input === '') {
@@ -197,6 +197,10 @@ function checkAllSingleLetterWords(input) {
     return null;
 }
 
+// برای جایگزین کردن نیم فاصله های وروی به فاصله کامل
+function convertHalfSpaceToFullSpace(text) {
+    return text.replace(/\u200C/g, ' ');
+}
 
 // تابعی که با کلیک بر روی دکمه جستجو اجرا می شود و مراحل جستجو شروع می شود
 function searchBook() {
@@ -220,11 +224,7 @@ function searchBook() {
     // حذف اسپیس های اضافی به وسیله تابعی که در بالا تعریف کردیم
     searchInput = cleanInput(searchInput);
     
-    // ذخیره کلمات ورودی داخل لیست با متد اسپلیت
-    const inputWords = searchInput.split(' ');
-    
-    // چک کردن اینکه آیا ورودی فقط کلمه غیرمفید است
-    const containsIrrelevantWords = inputWords.every(word => irrelevantWords.includes(word));
+    searchInput = convertHalfSpaceToFullSpace(searchInput);
 
     // اتصال متغییر ریزالت دیو به تگ دیوی که با ایدی ریزالت تعریف شده در اچ تی ام ال
     const resultDiv = document.getElementById('result');
@@ -237,19 +237,6 @@ function searchBook() {
         const result = checkAllSingleLetterWords(searchInput);
         if (result) {
             resultDiv.textContent = 'لطفا نام یا کلمه ای از کتاب را به صورت کامل وارد کنید.';
-            return;
-        }
-
-        // اگر ورودی فقط کلمه غیر مفید باشد
-        if (containsIrrelevantWords) {
-            resultDiv.textContent = 'لطفاً از وارد کردن کلمات غیرمفید (مانند حروف ربط و اضافه) خودداری کنید. برای جستجو، نام یک کتاب یا عبارت معنادار وارد کنید';
-            return;
-        }
-        
-        // بررسی داشتن کاراکتر خاص
-        const hasSpecialCharacters = SpecialCharacters.some(char => searchInput.includes(char))
-        if(hasSpecialCharacters) {
-            resultDiv.textContent = 'نام کتاب نمیتواند شامل کلمات خاص باشد';
             return;
         }
 
@@ -267,7 +254,7 @@ function searchBook() {
             return;
         }
 
-        // بررسی 2 یا 1 حرف باشد
+        // بررسی اینکه ورودی 2 یا 1 حرف باشد
         if (searchInput.length <= 2 && searchInput.length >= 1){
             resultDiv.textContent = 'لطفا نام یا کلمه ای از کتاب را به صورت کامل وارد کنید.';
             return;
@@ -290,10 +277,10 @@ function searchBook() {
                 .join(''); // هر کتاب را در یک پاراگراف جداگانه نمایش می‌دهد
 
         } else if(similarBooks === 0) { // اگه طول لیست صفر باشه (یعنی با استفاده از دستوراتی که در تابع فایند بوک بود ورودی حذف شده و لیست خالی شده)
-            resultDiv.textContent = 'لطفاً از وارد کردن کلمات غیرمفید (مانند حروف ربط و اضافه) خودداری کنید. برای جستجو، نام یک کتاب یا عبارت معنادار وارد کنید';
+            resultDiv.textContent = 'کتابی یافت نشد لطفا در وارد کردن اسم کتاب دقت کنید.';
 
         } else{ // اگه اصلا کتابی یافت نشده باشه
-            resultDiv.textContent = 'کتابی یافت نشد. لطفا در وارد کردن اسم کتاب دقت کنید.';
+            resultDiv.textContent = 'کتابی یافت نشد لطفا در وارد کردن اسم کتاب دقت کنید.';
         }   
 
         // اسکرول به دیو ریزالت
