@@ -53,7 +53,13 @@ let books = [
     "پردازش سیگنال های دیجیتال",
     "مهندسی اینترنت",
     "رایانش ابری",
-    "پایگاه داده های توزیع شده"
+    "پایگاه داده های توزیع شده",
+    "Clean Code",
+    "The Pragmatic Programmer",
+    "Code Complete",
+    "Design Patterns",
+    "Cracking the Coding Interview",
+    "Refactoring"
 ];
 
 // کلمات غیرمفید برای جستجوی کتاب
@@ -110,8 +116,8 @@ function findBooks(input) {
 
     // بررسی وجود کلمات ورودی در بین کلمات اسم کتاب ها(کلمه های کتاب شامل همه کلمه های ورودی باشد)
     const WordMatches1 = books.filter(book => {
-        const wordsInBook = book.split(' '); // جدا کردن کلمات کتاب بر اساس اسپیس
-        const inputWords = input.split(' '); //  جدا کردن کلمات ورودی بر اساس اسپیس
+        const wordsInBook = book.split(' ').map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); // جدا کردن کلمات کتاب بر اساس اسپیس
+        const inputWords = input.split(' ').map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); //  جدا کردن کلمات ورودی بر اساس اسپیس
         return inputWords.every(inputWord => wordsInBook.some(bookWord => bookWord.includes(inputWord)));
     });
 
@@ -121,8 +127,8 @@ function findBooks(input) {
 
     // بررسی وجود کلمات ورودی در بین کلمات اسم کتاب ها (با فاصله لون اشتاین)
     const WordMatches2 = books.filter(book => {
-        const wordsInBook = book.split(' '); // جدا کردن کلمات کتاب بر اساس اسپیس
-        const inputWords = input.split(' '); // جدا کردن کلمات ورودی بر اساس اسپیس
+        const wordsInBook = book.split(' ').map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); // جدا کردن کلمات کتاب بر اساس اسپیس
+        const inputWords = input.split(' ').map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); // جدا کردن کلمات ورودی بر اساس اسپیس
         return inputWords.every(inputWord =>
             wordsInBook.some(bookWord => lsDistance(inputWord, bookWord) <= 1) // استفاده از فاصله لون‌اشتاین
         );
@@ -139,8 +145,8 @@ function findBooks(input) {
     // همان wordMatches1 با تغییرات
     for (let i = 0; i < inputLength; i++) {
         const WordMatches1WithLoop = books.filter(book => {
-            const wordsInBook = book.split(' '); // جدا کردن کلمات کتاب بر اساس اسپیس
-            const inputWords = Array(input.split(' ')[i]); //  جدا کردن کلمات ورودی بر اساس اسپیس و انتخاب یک کلمه(تا زمانی که حلقه متوقف نشود کلمات بعدی انتخاب می شودند)
+            const wordsInBook = book.split(' ').map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); // جدا کردن کلمات کتاب بر اساس اسپیس
+            const inputWords = Array(input.split(' ')[i]).map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); //  جدا کردن کلمات ورودی بر اساس اسپیس و انتخاب یک کلمه(تا زمانی که حلقه متوقف نشود کلمات بعدی انتخاب می شودند)
             return inputWords.some(inputWord => wordsInBook.some(bookWord => bookWord.includes(inputWord)));
         });
 
@@ -153,8 +159,8 @@ function findBooks(input) {
     // همان wordMatches2 با تغییرات 
     for (let i = 0; i < inputLength; i++) {
         const WordMatches2WithLoop = books.filter(book => {
-            const wordsInBook = book.split(' '); // جدا کردن کلمات کتاب بر اساس اسپیس
-            const inputWords = Array(input.split(' ')[i]); // جدا کردن کلمات ورودی بر اساس اسپیس
+            const wordsInBook = book.split(' ').map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); // جدا کردن کلمات کتاب بر اساس اسپیس
+            const inputWords = Array(input.split(' ')[i]).map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); // جدا کردن کلمات ورودی بر اساس اسپیس
             return inputWords.some(inputWord => 
                 wordsInBook.some(bookWord => lsDistance(inputWord, bookWord) <= 1) //  جدا کردن کلمات ورودی بر اساس اسپیس و انتخاب یک کلمه(تا زمانی که حلقه متوقف نشود کلمات بعدی انتخاب می شودند)
             );
@@ -237,20 +243,6 @@ function searchBook() {
         const result = checkAllSingleLetterWords(searchInput);
         if (result) {
             resultDiv.textContent = 'لطفا نام یا کلمه ای از کتاب را به صورت کامل وارد کنید.';
-            return;
-        }
-
-        // بررسی اینکه ورودی شامل حروف انگلیسی است
-        const isEnglishInput = /[A-Za-z]/.test(searchInput);
-        if (isEnglishInput) {
-            resultDiv.textContent = 'لطفا به فارسی جستجو کنید.';
-            return;
-        }
-
-        // بررسی اینکه ورودی شامل عدد است
-        const hasNumber = /[0-9]/.test(searchInput);
-        if (hasNumber) {
-            resultDiv.textContent = 'لطفا به فارسی جستجو کنید.';
             return;
         }
 
