@@ -279,6 +279,7 @@ h3{
   direction: rtl;
   transition: 0.2s;
   cursor: pointer;
+  font-size: 18px;
 }
 
 .result-text:hover{
@@ -352,6 +353,10 @@ h3{
     margin-left: 30px;
     margin-right: 20px;
   } 
+
+  .result-text {
+    font-size: 17px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -397,6 +402,10 @@ h3{
 
   .result-section{
     overflow: visible;
+  }
+
+  .result-text {
+    font-size: 17px;
   }
 
   .search-section, .result-section {
