@@ -118,7 +118,7 @@ function findBooks(input) {
     const WordMatches1 = books.filter(book => {
         const wordsInBook = book.split(' ').map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); // جدا کردن کلمات کتاب بر اساس اسپیس
         const inputWords = input.split(' ').map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); //  جدا کردن کلمات ورودی بر اساس اسپیس
-        return inputWords.every(inputWord => wordsInBook.some(bookWord => bookWord.includes(inputWord)));
+        return inputWords.every(inputWord => wordsInBook.some(bookWord => bookWord === inputWord));
     });
 
     if (WordMatches1.length > 0) {
@@ -147,7 +147,7 @@ function findBooks(input) {
         const WordMatches1WithLoop = books.filter(book => {
             const wordsInBook = book.split(' ').map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); // جدا کردن کلمات کتاب بر اساس اسپیس
             const inputWords = Array(input.split(' ')[i]).map(word => /^[a-zA-Z]+$/.test(word) ? word.toLowerCase() : word); //  جدا کردن کلمات ورودی بر اساس اسپیس و انتخاب یک کلمه(تا زمانی که حلقه متوقف نشود کلمات بعدی انتخاب می شودند)
-            return inputWords.some(inputWord => wordsInBook.some(bookWord => bookWord.includes(inputWord)));
+            return inputWords.some(inputWord => wordsInBook.some(bookWord => bookWord === inputWord));
         });
 
         if (WordMatches1WithLoop.length > 0) {
